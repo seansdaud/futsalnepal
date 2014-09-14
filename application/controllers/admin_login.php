@@ -44,7 +44,7 @@ class Admin_login extends CI_Controller {
 					'global_message' => $value
 				);
 
-				$this->load->view('includes/template', $data);
+				$this->load->view('admin/includes/template', $data);
 			}
 		}
 	}

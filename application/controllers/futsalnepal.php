@@ -10,5 +10,4 @@ class Futsalnepal extends CI_Controller {
 
 		$this->load->view('users/includes/template', $data);
 	}
-
 }

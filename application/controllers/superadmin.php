@@ -53,7 +53,7 @@ class SuperAdmin extends CI_Controller{
 			);
 
 			$this->load->model('superadmin_model');
-			$query = $this->superAdmin_model->create_new_admin($data);
+			$query = $this->superadmin_model->create_new_admin($data);
 
 			if($query){
 				$data = array(
