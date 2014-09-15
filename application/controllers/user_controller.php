@@ -121,6 +121,20 @@ class User_controller extends CI_Controller {
 
 	}
 
+	public function find_arena(){
+		$search_value=$this->input->post('find_arena');
+		
+		$data = array(
+					'title' => 'user login',
+					'content' => 'users/search_arena_view'
+				);
+		$data['records']=$this->user_model->search_arena($search_value);
+
+				$this->load->view('users/includes/template', $data);
+	}
+
+	function find_arena_post(){
+
+	}
+
 }
-
-

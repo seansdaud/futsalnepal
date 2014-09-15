@@ -12,4 +12,15 @@
 			$result=$this->db->get('user')->num_rows();
 			return $result; 
 	 	}
+
+	 	function search_arena($search_value){
+	 		if(empty($search_value)){
+	 			return;
+	 		}
+	 		$this->db->select('*');
+	        $this->db->from('futsal_arena');
+	        $this->db->like('city',$search_value);
+	        $result=$this->db->get()->result();
+	        return $result;
+	 	}
 	}
