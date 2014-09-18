@@ -2,5 +2,8 @@
 
 <ul>
 	<li><a href="<?php echo base_url('admin'); ?>">Home</a></li>
+	<li><a href="<?php echo base_url('admin/schedular') ?>">Schedular</a></li>
+		<li><a href="<?php echo base_url('admin/show_schedular') ?>">Show Schedular</a></li>
 	<li><a href="<?php echo base_url('admin/logout') ?>">Logout</a></li>
+
 </ul>
