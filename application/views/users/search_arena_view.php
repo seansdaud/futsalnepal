@@ -1,6 +1,6 @@
 	<h1>Search Arena</h1>
 	<?php echo form_open('user_controller/find_arena') ?>
-	<select id="find_arena" name="find_arena" >
+	<select id="find_arena" name="find_arena" autofocus="autofocus" >
 	  <option value="Pokhara">Pokhara</option>
 	  <option value="kathmandu">Kathmandu</option>
 	  <option value="Chitwan">Chitwan</option>

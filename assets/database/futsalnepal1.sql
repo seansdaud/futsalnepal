@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 18, 2014 at 09:59 AM
+-- Generation Time: Sep 15, 2014 at 10:54 AM
 -- Server version: 5.6.12-log
 -- PHP Version: 5.4.12
 
@@ -72,23 +72,6 @@ INSERT INTO `futsal_arena` (`id`, `arena`, `city`, `location`, `price`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
---
-
-CREATE TABLE IF NOT EXISTS `migrations` (
-  `version` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`version`) VALUES
-(0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `superadmin`
 --
 
@@ -105,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `superadmin` (
 --
 
 INSERT INTO `superadmin` (`id`, `username`, `password`, `email`) VALUES
-(1, 'super', '8451ba8a14d79753d34cb33b51ba46b4b025eb81', 'gmail@lalit.com');
+(1, 'super', '1363d4641c5b52056c9998d640d0757ffed1505a', 'gmail@lalit.com');
 
 -- --------------------------------------------------------
 
@@ -119,20 +102,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(60) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(60) NOT NULL,
-  `contactno` varchar(14) NOT NULL,
+  `contactno` int(10) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `Id` (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`Id`, `name`, `email`, `username`, `password`, `contactno`) VALUES
-(10, 'mitab', 'chakre@gmail.com', 'chakre', '3c8732409c42604c9e5a9b56b2410d0d6f1febf9', '9800088877'),
-(8, 'lalita thapa', 'emocent.magar@gmail.com', 'emo', 'd3d3c9b08aa454d3d3512fd20bd686e65f7f75d2', '2147483647'),
-(9, 'suyog khoste', 'khoste@gmail.com', 'khoste', '074544ad077ef70ea84820b5c3f3e61166217f18', '2147483647'),
-(7, 'Prachanda Gurung', 'czinka62@yahoo.com', 'prachanda', 'd3d3c9b08aa454d3d3512fd20bd686e65f7f75d2', '2147483647');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

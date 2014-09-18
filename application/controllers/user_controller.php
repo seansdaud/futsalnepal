@@ -133,8 +133,4 @@ class User_controller extends CI_Controller {
 				$this->load->view('users/includes/template', $data);
 	}
 
-	function find_arena_post(){
-
-	}
-
 }

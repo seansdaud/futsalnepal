@@ -23,4 +23,22 @@
 	        $result=$this->db->get()->result();
 	        return $result;
 	 	}
+
+	 	function change_password(){
+		$this->db->where('password', sha1($this->input->post('current_password')));
+		if($this->db->get('user')->num_rows() == 1){
+
+			$data = array(
+				'password' => sha1($this->input->post('new_password'))
+			);
+
+			$this->db->where('username', $this->session->userdata('username'));
+			if($this->db->update('user', $data)){
+				echo "success;"; die();
+			}
+			return false;
+		}
+		return "Invalid current password.";
 	}
+
+}
