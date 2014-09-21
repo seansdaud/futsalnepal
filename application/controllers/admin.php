@@ -15,6 +15,7 @@ class Admin extends CI_Controller {
 	}
 
 	function index(){
+
 		$data = array(
 			'title' => 'Admin Home',
 			'content' => 'admin/home'
@@ -147,13 +148,15 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/includes/template', $data);
 	}
 	function add_schedule(){
-		$this->work_model->delete_schedule($this->input->post('admin_id'));
+		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+		$adminid=$admin[0]->id;
+		$this->work_model->delete_schedule($adminid);
 		$diff=$this->input->post('diff');
 		$j=-1;
 		$result = array();
 		for ($i=0; $i < $diff; $i++) { 
 				$data = array(
-					'admin_id'=>$this->input->post('admin_id'),
+					'admin_id'=>$adminid,
 					'time_diff'=>$this->input->post('diff'),
 					'start_time' => $this->input->post('start_time'.$i),
 					'end_time' => $this->input->post('end_time'.$i),
@@ -166,7 +169,7 @@ class Admin extends CI_Controller {
 					'saturday_price' => $this->input->post('saturday'.$i)
 				);
 			$this->work_model->add_schedule($data);
-	
+		
 			
 		}
 		if($j== $diff-1){
@@ -176,7 +179,13 @@ class Admin extends CI_Controller {
 		else{
 			// print_r("error");
 		}
-		redirect('admin/show_schedular');
+		$data = array(
+			'title' => 'Show schedular',
+			'content' => 'admin/showschedular',
+				'global_message' => 'Schedule Created'
+			);
+
+			$this->load->view('admin/includes/template', $data);
 		
 
 	}
@@ -189,18 +198,24 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/includes/template', array_merge($data));
 	}
 	function get_schedular(){
-	$data['new']=$this->db->get("schedular")->result();
+	$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+	$adminid= $admin[0]->id;
+	$data['new']=$this->db->where('admin_id', $adminid)->get('schedular')->result();
 	$diff=$data['new'];
 	print_r(json_encode($diff));
 	}
 	function update_schedular(){
+		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+		$adminid= $admin[0]->id;
+		print_r($adminid);
+		die();
 		$diff=$this->input->post('diff');
 		$j=0;
 		$result = array();
 		for ($i=0; $i < $diff; $i++) { 
 				$data = array(
 					'id'=>$this->input->post('id'.$i),
-					'admin_id'=>$this->input->post('admin_id'),
+					'admin_id'=>$adminid,
 					'time_diff'=>$this->input->post('diff'),
 					'start_time' => $this->input->post('start_time'.$i),
 					'end_time' => $this->input->post('end_time'.$i),

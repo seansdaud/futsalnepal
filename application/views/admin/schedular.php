@@ -17,7 +17,7 @@ echo form_open("admin/add_schedule",$attributes); ?>
 	 <input name="create" type="button" value="Create Schedule" required>
 </div>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
-<input type="hidden" name="admin_id" value="1">
+
 <div id="time"></div>
 <div id="result"></div>
 <div id="submit"></div>

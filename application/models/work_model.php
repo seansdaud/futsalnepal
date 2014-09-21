@@ -2,7 +2,11 @@
 
 
 class Work_model extends CI_Model {
-
+	function get_admin(){
+		$this->db->select('id,username'); 
+	    $this->db->from('admin');   
+	    return $this->db->get()->result();
+	}
 	function add_schedule($data){
 	if($this->db->insert("schedular",$data)){
 			return true;
