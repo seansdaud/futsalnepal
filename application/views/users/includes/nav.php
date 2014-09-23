@@ -1,1 +1,1 @@
-<?php echo ucfirst($message); ?>
+<?php echo $this->session->flashdata('feedback');?>
