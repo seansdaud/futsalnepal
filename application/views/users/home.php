@@ -19,13 +19,13 @@ Price table
 	<td>
 	<?php  echo $schedules->start_time;?>--<?php echo $schedules->end_time; ?>
 	</td>
-	<td><?php echo $schedules->sunday_price; ?></td>
-	<td><?php echo $schedules->monday_price; ?></td>
-	<td><?php echo $schedules->tuesday_price; ?></td>
-	<td><?php echo $schedules->wednesday_price; ?></td>
-	<td><?php echo $schedules->thrusday_price; ?></td>
-	<td><?php echo $schedules->friday_price; ?></td>
-	<td><?php echo $schedules->saturday_price; ?></td>
+	<td><?php echo $schedules->sunday_price; ?><input type="button" value="Book" ></td>
+	<td><?php echo $schedules->monday_price; ?><input type="button" value="Book" ></td></td>
+	<td><?php echo $schedules->tuesday_price; ?><input type="button" value="Book" ></td></td>
+	<td><?php echo $schedules->wednesday_price; ?><input type="button" value="Book" ></td></td>
+	<td><?php echo $schedules->thrusday_price; ?><input type="button" value="Book" ></td></td>
+	<td><?php echo $schedules->friday_price; ?><input type="button" value="Book" ></td></td>
+	<td><?php echo $schedules->saturday_price; ?><input type="button" value="Book" ></td></td>
 </tr>
 <?php endif; ?>
 <?php endforeach; ?>
