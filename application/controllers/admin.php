@@ -155,20 +155,18 @@ class Admin extends CI_Controller {
 		$j=-1;
 		$result = array();
 		for ($i=0; $i < $diff; $i++) { 
-				$data = array(
+			for ($j=1; $j < 8; $j++) { 
+					$data = array(
 					'admin_id'=>$adminid,
 					'time_diff'=>$this->input->post('diff'),
 					'start_time' => $this->input->post('start_time'.$i),
 					'end_time' => $this->input->post('end_time'.$i),
-					'sunday_price' => $this->input->post('sunday'.$i),
-					'monday_price' => $this->input->post('monday'.$i),
-					'tuesday_price' => $this->input->post('tuesday'.$i),
-					'wednesday_price' => $this->input->post('wednesday'.$i),
-					'thrusday_price' => $this->input->post('thrusday'.$i),
-					'friday_price' => $this->input->post('friday'.$i),
-					'saturday_price' => $this->input->post('saturday'.$i)
+					'price' => $this->input->post($j.$i),
+					'day'=>$j
 				);
-			$this->work_model->add_schedule($data);
+					$this->work_model->add_schedule($data);
+			}
+			
 		
 			
 		}
@@ -179,63 +177,62 @@ class Admin extends CI_Controller {
 		else{
 			// print_r("error");
 		}
-		$data = array(
-			'title' => 'Show schedular',
-			'content' => 'admin/showschedular',
-				'global_message' => 'Schedule Created'
-			);
-
-			$this->load->view('admin/includes/template', $data);
-		
+	
+			redirect("admin/show_schedular");
 
 	}
 	function show_schedular(){
+	$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+	$adminid= $admin[0]->id;
+	$data1['schedular']=$this->db->where('admin_id', $adminid)->get('scheduler')->result();
 		$data = array(
 			'title' => 'Show schedular',
 			'content' => 'admin/showschedular'
 		);
-		$data['schedular']= $this->db->get('schedular')->result();
-		$this->load->view('admin/includes/template', array_merge($data));
+		$data['schedular']= $this->db->get('scheduler')->result();
+		$this->load->view('admin/includes/template', array_merge($data,$data1));
 	}
 	function get_schedular(){
 	$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
 	$adminid= $admin[0]->id;
-	$data['new']=$this->db->where('admin_id', $adminid)->get('schedular')->result();
+	$data['new']=$this->db->where('admin_id', $adminid)->get('scheduler')->result();
 	$diff=$data['new'];
 	print_r(json_encode($diff));
 	}
 	function update_schedular(){
 		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
 		$adminid= $admin[0]->id;
-		print_r($adminid);
-		die();
 		$diff=$this->input->post('diff');
-		$j=0;
+		$c=0;
+		$k=0;
 		$result = array();
 		for ($i=0; $i < $diff; $i++) { 
-				$data = array(
-					'id'=>$this->input->post('id'.$i),
+			for ($j=1; $j < 8; $j++) { 
+				$c++;
+					$data = array(
+					'id'=>$this->input->post('id'.$c),
 					'admin_id'=>$adminid,
 					'time_diff'=>$this->input->post('diff'),
-					'start_time' => $this->input->post('start_time'.$i),
-					'end_time' => $this->input->post('end_time'.$i),
-					'sunday_price' => $this->input->post('sunday'.$i),
-					'monday_price' => $this->input->post('monday'.$i),
-					'tuesday_price' => $this->input->post('tuesday'.$i),
-					'wednesday_price' => $this->input->post('wednesday'.$i),
-					'thrusday_price' => $this->input->post('thrusday'.$i),
-					'friday_price' => $this->input->post('friday'.$i),
-					'saturday_price' => $this->input->post('saturday'.$i)
+					'start_time' => $this->input->post('start_time'.$c),
+					'end_time' => $this->input->post('end_time'.$c),
+					'price' => $this->input->post($j.$i),
+					'day'=>$j
 				);
-				array_push($result, $data);
-			if($this->work_model->update_schedule($data)){
-				$j++;
-
+					if($this->work_model->update_schedule($data)){
+						$k++;
+						array_push($result,$this->input->post('id'.$c));
+					}
 			}
+			
+		
+			
 		}
-			if($j==$diff){
-				print_r(1);
-		}
+		
+			if($k==$diff*7){
+							print_r(1);
+			
+				}
+
 
 	}
 
