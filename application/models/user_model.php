@@ -2,15 +2,42 @@
  class User_model extends CI_Model{
 	 	function signup($data){
 			$this->db->insert('user',$data);
-			return 1;
+			return;
 	 	}
 
 	 	function user_validate($data){
-	 		$this->db->cache_on();
 			$array = array('username' => $data['username'], 'password' => $data['password']);
 			$this->db->where($array);
 			$result=$this->db->get('user')->num_rows();
 			return $result; 
+	 	}
+
+	 	function check_status($data){
+	 		$array=array('username'=>$data['username'], 'password'=>$data['password'],'status'=>'1');
+	 		$this->db->where($array);
+	 		$result=$this->db->get('user')->num_rows();
+	 		return $result;
+	 	}
+
+	 	function status_validation($data){
+	 		$array = array('activation_code' => $data, 'status' =>'1');
+	 		$check_verification=$this->db->where($array)->get('user')->num_rows();
+	 		if($check_verification==1){
+	 			return 2;
+	 		}
+	 		else{
+	 			$confirm=$this->db->where('activation_code',$data)->get('user')->num_rows();
+		 		if($confirm==1){
+		 			$status = array(
+		 					'status'=>'1'
+		 				);
+		 			$this->db->where('activation_code',$data)->update('user',$status);
+		 			return 1;
+		 		}
+		 		else{
+		 			return 0;
+		 		}
+	 		}
 	 	}
 
 	 	function search_arena($search_value){

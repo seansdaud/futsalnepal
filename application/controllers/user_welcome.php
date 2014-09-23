@@ -25,49 +25,50 @@
 		public function user_logout(){
 			$this->session->unset_userdata('user_logged_in');
 			redirect('user_controller');
-	}
+		}
 
-	function change_password(){
-		$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
-		$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
 
-		if($this->form_validation->run() == true){
-			$confirm = $this->user_model->change_password();
-			if($confirm === true){
-				$msg = "Password Successfully changed.";
-			}
-			else if($confirm === false){
-				$msg = "Error occurred. Please try again.";
+		function change_password(){
+			$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
+			$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
+
+			if($this->form_validation->run() == true){
+				$confirm = $this->user_model->change_password();
+				if($confirm === true){
+					$msg = "Password Successfully changed.";
+				}
+				else if($confirm === false){
+					$msg = "Error occurred. Please try again.";
+				}
+				else{
+					$msg = $confirm;
+				}
+
+				$data = array(
+					'title' => 'User setting',
+					'content' => 'users/user_settings',
+					'global_message' => $msg
+				);
+
+				$this->load->view('users/includes/template', $data);
 			}
 			else{
-				$msg = $confirm;
+				$data = array(
+					'title' => 'user setting',
+					'content' => 'users/user_settings'
+				);
+
+				$this->load->view('users/includes/template', $data);
 			}
-
-			$data = array(
-				'title' => 'User setting',
-				'content' => 'users/user_settings',
-				'global_message' => $msg
-			);
-
-			$this->load->view('users/includes/template', $data);
 		}
-		else{
+
+		public function user_setting(){
 			$data = array(
-				'title' => 'user setting',
-				'content' => 'users/user_settings'
-			);
+					'title' => 'user setting',
+					'content' => 'users/user_settings'
+				);
 
-			$this->load->view('users/includes/template', $data);
+				$this->load->view('users/includes/template', $data);
 		}
-	}
-
-	public function user_setting(){
-		$data = array(
-				'title' => 'user setting',
-				'content' => 'users/user_settings'
-			);
-
-			$this->load->view('users/includes/template', $data);
-	}
 
 }

@@ -3,13 +3,6 @@
 
 $data['title'] = $title;
 
-if(isset($global_message)){
-	$data['message'] = $global_message;
-}
-else{
-	$data['message'] = '';
-}
-
 $this->load->view('users/includes/header', $data);
 
 if($this->session->userdata('admin_logged_in') == true){
