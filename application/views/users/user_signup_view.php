@@ -43,17 +43,6 @@
 	<?php echo anchor("user_controller/form_login", 'login'); ?>
 
 	<hr/>
-	<h1>Search Arena</h1>
-	<?php echo form_open('user_controller/find_arena') ?>
-	<select id="find_arena" name="find_arena" >
-	  <option value="Pokhara">Pokhara</option>
-	  <option value="kathmandu">Kathmandu</option>
-	  <option value="Chitwan">Chitwan</option>
-	  <option value="Biratnagar">Biratnagar</option>
-	</select>
-	<p>
-		<input type="submit" value="search" />
-	</p>
-	<?php echo form_close(); ?>
+	
 </body>
 </html>
