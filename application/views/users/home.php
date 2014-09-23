@@ -2,32 +2,47 @@
 <?php echo $admins->username; ?>
 </br>
 Price table
-<table border="4">
-<tr>
-<td>Time</td>
-<td>sunday</td>
-<td>monday</td>
-<td>tuesday</td>
-<td>wednesday</td>
-<td>thrusday</td>
-<td>friday</td>
-<td>saturday</td>
-</tr>
-<?php foreach ($schedule as $schedules ): ?>
-	<?php if ($schedules->admin_id== $admins->id) :?>
-<tr>
-	<td>
-	<?php  echo $schedules->start_time;?>--<?php echo $schedules->end_time; ?>
-	</td>
-	<td><?php echo $schedules->sunday_price; ?><input type="button" value="Book" ></td>
-	<td><?php echo $schedules->monday_price; ?><input type="button" value="Book" ></td></td>
-	<td><?php echo $schedules->tuesday_price; ?><input type="button" value="Book" ></td></td>
-	<td><?php echo $schedules->wednesday_price; ?><input type="button" value="Book" ></td></td>
-	<td><?php echo $schedules->thrusday_price; ?><input type="button" value="Book" ></td></td>
-	<td><?php echo $schedules->friday_price; ?><input type="button" value="Book" ></td></td>
-	<td><?php echo $schedules->saturday_price; ?><input type="button" value="Book" ></td></td>
-</tr>
-<?php endif; ?>
-<?php endforeach; ?>
+			<table border="4">
+										<tr>
+											<td>Time</td>
+											<td>sunday</td>
+											<td>monday</td>
+											<td>tuesday</td>
+											<td>wednesday</td>
+											<td>thrusday</td>
+											<td>friday</td>
+											<td>saturday</td>
+										</tr>
+
+
+							<?php foreach ($schedular as $keys ): ?>
+												<?php if ($keys->admin_id== $admins->id) :?>
+														<?php $time=$keys->time_diff; ?>
+														<input type='hidden' name='diff' value='<?php echo $time; ?>'>
+												<?php endif; ?>
+							<?php endforeach; ?>
+													<?php $i=0; ?>
+													<?php $j=0; ?>
+													<?php $c=0; ?>
+														<?php foreach ($schedular as $key ): ?>
+														<?php if ($keys->admin_id== $admins->id) :?>
+														<?php $i++;?>
+														<?php $c++;?>
+														<?php if($i==1) : ?>
+															<tr>
+															<td name='time'><?php echo $key->start_time; ?>--<?php echo $key->end_time; ?></td>
+															<td ><span><?php echo $key->price; ?></span></td>
+														<?php elseif ($i==7): ?>
+																<td ><span><?php echo $key->price; ?></span></td>
+																</tr>
+																<?php $i=0; ?>
+																<?php $j++;?>
+														<?php elseif ($i<8) : ?>
+															<td ><span><?php echo $key->price; ?></span></td>
+														<?php endif; ?>
+
+													<?php endif; ?>
+										<?php endforeach; ?>
+
 </table>
 <?php endforeach; ?>

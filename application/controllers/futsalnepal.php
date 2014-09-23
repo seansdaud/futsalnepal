@@ -8,7 +8,7 @@ class Futsalnepal extends CI_Controller {
 			'content' => 'users/home'
 		);
 		$data['admin']=$this->work_model->get_admin();
-		$data['schedule']=$this->db->get('scheduler')->result();
+		$data['schedular']=$this->db->get('scheduler')->result();
 		$this->load->view('users/includes/template', $data);
 	}
 }
