@@ -46,16 +46,60 @@ class User_controller extends CI_Controller {
 					'name'=>$this->input->post('name'),
 					'email'=>$this->input->post('email'),
 					'username'=>$this->input->post('username'),
+					'activation_code'=>random_string('alnum',50),
 					'password'=>sha1($this->input->post('password')),
-					'contactno'=>$this->input->post('contactno'),
+					'contactno'=>$this->input->post('contactno')
 				);
-
-			$this->load->model('user_model');
-			$this->user_model->signup($data);
-			$this->index();
-
+			$message_sent=$this->sendVerificationEmail($data['email'],$data['activation_code']);
+			if($message_sent==1){
+				$this->load->model('user_model');
+				$this->user_model->signup($data);
+			}
+			else{
+				echo $message_sent;
+			}
+			$this->session->set_flashdata('feedback', 'Thanku for registration! Please check your email to confirm');
+			redirect('User_controller/form_login');
 		}
 	}
+
+	function sendVerificationEmail($email,$verificationText){
+		 $config = Array(
+		  'protocol' => 'smtp',
+		  'smtp_host' => 'ssl://smtp.gmail.com',
+		  'smtp_port' => 465,
+		  'smtp_user' => 'prachanda.gurung@gmail.com', 
+		  'smtp_pass' => '6twotwo0tangible', 
+		  'mailtype' => 'html',
+		  'charset' => 'iso-8859-1',
+		  'wordwrap' => TRUE
+		);
+
+		$this->load->library('email', $config);
+		$this->email->set_newline("\r\n");
+		$this->email->from('Admin');
+		$this->email->to($email);
+		$this->email->subject("Email Verification");
+		$this->email->message("Dear User,\nPlease click on below URL or paste into your browser to verify your Email Address\n\n http://localhost/futsalnepal/User_controller/verify/".$verificationText."\n"."\n\nThanks\nfutsal nepal");
+		if ($this->email->send()) {
+		    
+		    return 1;
+		}
+		else {
+		    $error=show_error($this->email->print_debugger());
+		    return $error;
+		  }
+		
+	}
+
+	/*function random_string($length) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+	    }
+	    return $randomString;
+	}*/
 
 	public function form_login(){
 		$data = array(
@@ -97,29 +141,49 @@ class User_controller extends CI_Controller {
 				);
 			$this->load->model('user_model');
 			$result=$this->user_model->user_validate($data);
-
 			if($result==1){
-					$user_session = array(
-						'user_logged_in' => true,
-						'username' => $this->input->post('username')
-					);
+				$status=$this->user_model->check_status($data);
+					if($status==1){
+							$user_session = array(
+							'user_logged_in' => true,
+							'username' => $this->input->post('username')
+						);
 
-					$this->session->set_userdata($user_session);
+						$this->session->set_userdata($user_session);
 
-				redirect('user_welcome');
+						redirect('user_welcome');
+					}
+					else{
+						$this->session->set_flashdata('feedback', 'Please!! Check your email for confirmation');
+						redirect('User_controller/form_login');
+					}
 			}
 			else{
-				$data = array(
-					'title' => 'user login',
-					'content' => 'users/user_login_view'
-				);
-
-				$this->load->view('users/includes/template', $data);
+				$this->session->set_flashdata('feedback', 'username or password not matched! </br> Please sign in again!');
+				redirect('User_controller/form_login');
 			}
 
 		}
 
 	}
+
+	public function verify(){
+			$confirmation_code = $this->uri->segment(3);
+			$result=$this->user_model->status_validation($confirmation_code);
+			if($result==2){
+				$this->session->set_flashdata('feedback', 'Your email is already verified</br>provide login details below');
+				redirect('User_controller/form_login');
+			}
+			else if($result==1){
+				$this->session->set_flashdata('feedback', 'Your account have been verified!</br>please enter your login details below');
+				redirect('User_controller/form_login');
+			}
+			else if($result==0){
+				$this->session->set_flashdata('feedback', 'Wrong verification code!</br> Please sign-up again');
+				redirect('User_controller/form_signup');
+			}
+		}
+
 
 	public function find_arena(){
 		$search_value=$this->input->post('find_arena');
@@ -131,10 +195,6 @@ class User_controller extends CI_Controller {
 		$data['records']=$this->user_model->search_arena($search_value);
 
 				$this->load->view('users/includes/template', $data);
-	}
-
-	function find_arena_post(){
-
 	}
 
 }

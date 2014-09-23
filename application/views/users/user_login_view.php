@@ -4,6 +4,7 @@
 	<title>login</title>
 </head>
 <body>
+	<?php echo $this->session->flashdata('feedback');?>
 	<h1>SignIn</h1>
 	<div id=login>
 		<?php echo form_open('user_controller/user_login') ?>

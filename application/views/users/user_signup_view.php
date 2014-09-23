@@ -4,6 +4,7 @@
 	<title>futsalnepal</title>
 </head>
 <body>
+	<?php echo $this->session->flashdata('feedback');?>
 	<h1>SignUp</h1>
 	<?php echo form_open('user_controller/create') ?>
 
