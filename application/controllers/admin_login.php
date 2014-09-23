@@ -6,7 +6,6 @@ class Admin_login extends CI_Controller {
 		parent::__construct();
 		$this->check_login();
 	}
-
 	function check_login(){
 		$data = $this->session->userdata('admin_logged_in');
 		if(isset($data) && $data == true){

@@ -7,7 +7,8 @@ class Futsalnepal extends CI_Controller {
 			'title' => 'Futsal Nepal',
 			'content' => 'users/home'
 		);
-
+		$data['admin']=$this->work_model->get_admin();
+		$data['schedule']=$this->db->get('schedular')->result();
 		$this->load->view('users/includes/template', $data);
 	}
 }

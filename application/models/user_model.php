@@ -11,7 +11,6 @@
 			$result=$this->db->get('user')->num_rows();
 			return $result; 
 	 	}
-
 	 	function check_status($data){
 	 		$array=array('username'=>$data['username'], 'password'=>$data['password'],'status'=>'1');
 	 		$this->db->where($array);
