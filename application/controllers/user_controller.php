@@ -58,7 +58,7 @@ class User_controller extends CI_Controller {
 			else{
 				echo $message_sent;
 			}
-			$this->session->set_flashdata('feedback', 'Thanku for registration! Please check your email to confirm');
+			$this->session->set_flashdata('feedback', 'Thank-you for registration! Please check your email to confirm');
 			redirect('User_controller/form_login');
 		}
 	}
