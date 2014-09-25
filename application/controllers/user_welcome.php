@@ -31,35 +31,27 @@
 		function change_password(){
 			$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
 			$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
-
-			if($this->form_validation->run() == true){
-				$confirm = $this->user_model->change_password();
-				if($confirm === true){
-					$msg = "Password Successfully changed.";
-				}
-				else if($confirm === false){
-					$msg = "Error occurred. Please try again.";
-				}
-				else{
-					$msg = $confirm;
-				}
-
-				$data = array(
-					'title' => 'User setting',
-					'content' => 'users/user_settings',
-					'global_message' => $msg
-				);
-
-				$this->load->view('users/includes/template', $data);
+			if ($this->form_validation->run() == FALSE)
+				{
+					redirect('user_welcome/user_setting');
 			}
 			else{
-				$data = array(
-					'title' => 'user setting',
-					'content' => 'users/user_settings'
-				);
+				$result=$this->user_model->change_psw();
+				if($result==1){
+					$this->session->set_flashdata('feedback', 'Your password have been changed');
+					redirect('user_welcome');
+				}
+				else if($result==2){
+					$this->session->set_flashdata('feedback', 'Could not update! please try again!');
+					redirect('user_welcome');
+				}
 
-				$this->load->view('users/includes/template', $data);
+				else if($result==0){
+					$this->session->set_flashdata('feedback', 'Your current password do not matched! Provide valid password');
+					redirect('user_welcome');
+				}
 			}
+			
 		}
 
 		public function user_setting(){
@@ -69,6 +61,36 @@
 				);
 
 				$this->load->view('users/includes/template', $data);
+		}
+
+		function do_upload()
+		{
+			$data=array(
+					'image_name'=>$_FILES['file']['name'],
+					'size'=>$_FILES['file']['size'],
+					'type'=>$_FILES['file']['type'],
+					
+					'temp_name'=>$_FILES['file']['tmp_name'],
+					'error'=>$_FILES['file']['error']
+				);	
+			if(isset($data) && !empty($data)){
+				$loc='./images/' ;
+				if(move_uploaded_file($data['temp_name'], $loc.$data['image_name'])){
+					$this->gallery_model->do_upload($data);
+				}
+				else{
+					echo "upload failed";
+				}
+			}
+			else{
+				echo "choose a file";
+			}
+
+			$this->load->view('gallery_view');
+		}
+
+		function delete_image(){
+			$this->gallery_model->delete_image();
 		}
 
 }

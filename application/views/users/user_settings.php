@@ -17,6 +17,6 @@
 		<input type="submit" value="confirm" />
 		</p>
 
-		<?php echo form_close(); ?>
+	<?php echo form_close(); ?>
 
 	</div>
