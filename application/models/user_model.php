@@ -41,9 +41,16 @@
 
 
 		function do_upload($data){
-			$this->db->insert('images',array('image_name' => $data['image_name']));
-			echo "saved";
-			return;
+			$this->db->insert('profile_image',array('image_name' => $data['image_name'],
+													'username'	=>$this->session->userdata('username')
+												));
+			return 1;
+		}
+
+		function get_image(){
+			$this->db->where('username',$this->session->userdata('username'));
+		    $result=$this->db->get('profile_image')->result();
+		    return $result;
 		}
 
 		function change_psw(){
@@ -65,5 +72,16 @@
 			else{
 				return 0;
 			}
+		}
+
+		function delete_image(){
+			$this->db->select('image_name');
+			$this->db->where('image_id',$this->uri->segment(3));
+			$result=$this->db->get('profile_image')->result();
+			$link = "./images/".$result[0]->image_name;
+			unlink($link);
+			$this->db->where('image_id',$this->uri->segment(3));
+		 	$this->db->delete('profile_image');
+		 	redirect('user_welcome');
 		}
 }
