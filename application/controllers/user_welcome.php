@@ -9,7 +9,7 @@
 		function check_login(){
 			$data = $this->session->userdata('user_logged_in');
 			if(!isset($data) || $data != true){
-				redirect("user_controller");
+				redirect("futsalnepal");
 			}
 		}
 
@@ -19,12 +19,16 @@
 			'content' => 'users/welcome'
 			);
 
+			if($query=$this->user_model->get_image()){
+				$data['records']=$query;
+			}
+
 			$this->load->view('users/includes/template', $data);
 		}
 
 		public function user_logout(){
 			$this->session->unset_userdata('user_logged_in');
-			redirect('user_controller');
+			redirect('futsalnepal');
 		}
 
 
@@ -66,31 +70,38 @@
 		function do_upload()
 		{
 			$data=array(
-					'image_name'=>$_FILES['file']['name'],
-					'size'=>$_FILES['file']['size'],
-					'type'=>$_FILES['file']['type'],
-					
-					'temp_name'=>$_FILES['file']['tmp_name'],
-					'error'=>$_FILES['file']['error']
+					'image_name'=>$_FILES['image']['name'],
+					'size'=>$_FILES['image']['size'],
+					'type'=>$_FILES['image']['type'],
+					'temp_name'=>$_FILES['image']['tmp_name'],
+					'error'=>$_FILES['image']['error']
 				);	
-			if(isset($data) && !empty($data)){
-				$loc='./images/' ;
-				if(move_uploaded_file($data['temp_name'], $loc.$data['image_name'])){
-					$this->gallery_model->do_upload($data);
+			if($data['error']==0){
+				if(isset($data) && !empty($data)){
+					$loc='./images/' ;
+					if(move_uploaded_file($data['temp_name'], $loc.$data['image_name'])){
+						$this->user_model->do_upload($data);
+					}
+					else{
+						echo "upload failed";
+					}
 				}
 				else{
-					echo "upload failed";
+					echo "choose a file";
 				}
+
 			}
 			else{
-				echo "choose a file";
-			}
+				echo $data['error'];
 
-			$this->load->view('gallery_view');
+			}
+			
+			$this->session->set_flashdata('feedback', 'profile pic changed');
+			redirect('user_welcome/index');
 		}
 
 		function delete_image(){
-			$this->gallery_model->delete_image();
+			$this->user_model->delete_image();
 		}
 
 }

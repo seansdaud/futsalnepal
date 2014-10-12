@@ -1,4 +1,4 @@
-<h1>Change password</h1>
+<h1>Change security</h1>
 	<?php echo validation_errors(); ?>
 	<div id=changepsw>
 		<?php echo form_open('user_welcome/change_password') ?>

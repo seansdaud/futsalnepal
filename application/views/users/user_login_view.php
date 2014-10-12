@@ -4,10 +4,10 @@
 	<title>login</title>
 </head>
 <body>
-	<?php echo $this->session->flashdata('feedback');?>
+	<h2><?php echo $this->session->flashdata('feedback');?></h2>
 	<h1>SignIn</h1>
 	<div id=login>
-		<?php echo form_open('user_controller/user_login') ?>
+		<?php echo form_open('futsalnepal/user_login') ?>
 
 		<p>
 		<label for="username">Username:</label>
@@ -20,13 +20,11 @@
 		</p>
 
 		<p>
-		<input type="submit" value="submit" />
+		<input type="submit" value="login" />
 		</p>
 
 		<?php echo form_close(); ?>
 		<?php echo validation_errors(); ?>
-
-		<?php echo anchor("user_controller/form_signup", 'signup'); ?>
 
 	</div>
 </body>

@@ -4,9 +4,9 @@
 	<title>futsalnepal</title>
 </head>
 <body>
-	<?php echo $this->session->flashdata('feedback');?>
+	<h2><?php echo $this->session->flashdata('feedback_signup');?></h2>
 	<h1>SignUp</h1>
-	<?php echo form_open('user_controller/create') ?>
+	<?php echo form_open('futsalnepal/create') ?>
 
 	<p>
 	<label for="name">Full Name:</label>
@@ -34,13 +34,11 @@
 	</p>
 
 	<p>
-	<input type="submit" value="submit" />
+	<input type="submit" value="signup" />
 	</p>
 
 	<?php echo form_close(); ?>
 	<?php echo validation_errors(); ?>
-
-	<?php echo anchor("user_controller/form_login", 'login'); ?>
 
 	<hr/>
 	
