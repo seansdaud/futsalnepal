@@ -150,6 +150,13 @@ class Admin extends CI_Controller {
 	function add_schedule(){
 		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
 		$adminid=$admin[0]->id;
+		$new=$this->db->where('admin_id',$adminid)->get('scheduler')->result();
+		foreach ($new as $key) {
+
+			if($this->db->where("schedule_id",$key->id)){
+			$this->db->delete('booking');
+			}
+		}
 		$this->work_model->delete_schedule($adminid);
 		$diff=$this->input->post('diff');
 		$j=-1;
@@ -235,6 +242,64 @@ class Admin extends CI_Controller {
 
 
 	}
+	function book_schedular(){
+		$data = array(
+			'title' => 'Book schedular',
+			'content' => 'admin/choose_player'
+		);
+		$this->load->view('admin/includes/template',$data);
+	}
+	function pre_book_schedule(){
+		if($username=$this->input->post('user')){
+			if($user = $this->db->where('username', $username)->get('user')->result()){
+			$data2 = array(
+				'user_id' => $user[0]->Id
+						);
+		}
+		else {
+			$data2 = array(
+				'user_id' =>NULL
+						);
+		}
+		}
+		else if($new=$this->session->flashdata('new')){
+			$data2 = array(
+				'user_id' => $new['user']
+						);
+		}
+		else{
+			$data2 = array(
+				'user_id' =>NULL
+						);
 
+		}
+		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+		$adminid= $admin[0]->id;
+		$data1['schedular']=$this->db->where('admin_id', $adminid)->get('scheduler')->result();
+			$data = array(
+				'title' => 'Book schedular',
+				'content' => 'admin/bookschedular'
+			);
+			$data['schedular']= $this->db->get('scheduler')->result();
+			$this->load->view('admin/includes/template', array_merge($data,$data1,$data2));
+		
+	}
+	function book(){
+			date_default_timezone_set("Asia/Katmandu"); 
+			$date = $this->db->where('id', $this->uri->segment(3))->get('scheduler')->result();
+			// print_r($date[0]->day);
+			$data = array(
+					'schedule_id'=>$this->uri->segment(3),
+					'user_id'=>$this->uri->segment(4),
+					'booking_date'=>date("Y-m-d")
+					);
+			$booking_id=$this->work_model->booking($data);
+			$data1=array('book_status'=>$booking_id);
+			$this->db->where('id',$this->uri->segment(3));
+			$this->db->update('scheduler',$data1);
+			$data2 = array('user'=>$this->uri->segment(4));
+			$this->session->set_flashdata('new',$data2);
+			redirect("admin/pre_book_schedule");
+	}
 
 }

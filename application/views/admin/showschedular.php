@@ -4,7 +4,6 @@ echo form_open("admin/update_schedule",$attributes); ?>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
 
 <div id="time"></div>
-<div id="id"></div>
 <div id="result">
 	<table id='mytable' name='futsal-table' border=1 width=100% >
 		<tbody id='my'>
@@ -58,6 +57,8 @@ echo form_open("admin/update_schedule",$attributes); ?>
 
 </div>
 <input type='button' onclick='update_ajax()'  value='update'>
+<div id="id"></div>
+
 <div id="message"></div>
 <?php echo form_close(); ?>
 <!-- </div> -->
