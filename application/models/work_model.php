@@ -25,4 +25,9 @@ class Work_model extends CI_Model {
 
 		return false;
 	}
+	function booking($data){
+		if($this->db->insert("booking",$data)){
+			return $this->db->insert_id();
+		}
+	}
 }

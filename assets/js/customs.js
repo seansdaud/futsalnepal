@@ -183,6 +183,8 @@ function update_ajax(){
           	data: form_data,
           	dataType: 'json',
           	  success:function(data){ 
+          	  	 $('#id').html("");
+
           	  	if (data==1) {
           	  		$('#message').html("Updated Successfully");
           	  	};
@@ -190,6 +192,10 @@ function update_ajax(){
           	  $('#message').html("");
           	}, 2000);
      		  },
+     		   beforeSend : function (){
+                 $('#id').html("<img src='"+base_url+"/images/ajax_load.gif'>");
+
+            },
           	    error: function(jqXHR, textStatus, errorThrown){ 
       alert( jqXHR.responseText);
                
