@@ -1,3 +1,4 @@
+
 <div id="show">
 <?php 
 
@@ -77,6 +78,7 @@ echo form_open("admin/update_schedule",$attributes); ?>
 															</h5>
 															<?php else: ?>
 															<h5 class="btn btn-danger log-btn color">
+
 																	<?php  echo anchor("admin/book/$key->id/$user_id","Book"); ?>
 															</h5>
 															<?php endif; ?>

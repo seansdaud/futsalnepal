@@ -256,7 +256,7 @@ class Admin extends CI_Controller {
 				'user_id' => $user[0]->Id
 						);
 		}
-		else{
+		else {
 			$data2 = array(
 				'user_id' =>NULL
 						);
