@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 			'content' => 'admin/settings'
 		);
 
-		$this->load->view('includes/template', $data);
+		$this->load->view('admin/includes/template', $data);
 	}
 
 	function change_username(){
@@ -60,7 +60,7 @@ class Admin extends CI_Controller {
 				'global_message' => $msg
 			);
 
-			$this->load->view('includes/template', $data);
+			$this->load->view('admin/includes/template', $data);
 		}
 		else{
 			$data = array(
@@ -68,7 +68,7 @@ class Admin extends CI_Controller {
 				'content' => 'admin/settings'
 			);
 
-			$this->load->view('includes/template', $data);
+			$this->load->view('admin/includes/template', $data);
 		}
 	}
 
@@ -94,7 +94,7 @@ class Admin extends CI_Controller {
 				'global_message' => $msg
 			);
 
-			$this->load->view('includes/template', $data);
+			$this->load->view('admin/includes/template', $data);
 		}
 		else{
 			$data = array(
@@ -102,7 +102,7 @@ class Admin extends CI_Controller {
 				'content' => 'admin/settings'
 			);
 
-			$this->load->view('includes/template', $data);
+			$this->load->view('admin/includes/template', $data);
 		}
 	}
 
@@ -137,6 +137,23 @@ class Admin extends CI_Controller {
 			);
 
 			$this->load->view('includes/template', $data);
+		}
+	}
+	function changeProfilePicture(){
+		if(!empty($_FILES['file'])){
+			$name=$_FILES['file']['name'];
+			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+			$path1= 'admin_image'.'.'.$ext;
+  			$path='assets/images/profile/admin/'.$path1;
+	  		if($_FILES['file']['error']==0 && move_uploaded_file($_FILES['file']['tmp_name'], $path)){
+				$data=array(
+					'image'=>$path1
+				);
+				$this->db->update('admin', $data, "id = 1");
+				redirect('admin');
+			}
+			$this->session->set_flashdata('msg', 'Error Occurred. Please choose different file.');
+			redirect('admin/settings');
 		}
 	}
 		function schedular(){

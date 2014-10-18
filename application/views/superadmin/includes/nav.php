@@ -1,9 +1,33 @@
 <?php echo ucfirst($message); ?>
 
-<ul>	
-	<li><a href="<?php echo base_url('superadmin'); ?>">Home</a></li>
-	<li><?php echo anchor('superadmin/logout', 'Logout'); ?></li>
-	<li><?php echo anchor('superadmin/create_admin', 'Create Admin') ?></li>
-	<li><?php echo anchor('superadmin/admins', 'Admins'); ?></li>
-	<li><?php echo anchor('superadmin/settings', 'Settings') ?></li>
-</ul>
+<div class="dashboard-wrapper">
+	<div class="row">
+		<nav class="nav navbar-default navigation">
+			<div class="dashboard-topic">FutsalNepal(SuperAdmin)</div>
+			<ul class="logout">
+				<li class="settings"><a href="<?php echo base_url('superadmin/settings'); ?>"><span class="glyphicon glyphicon-cog"></span></a></li>
+				<li><a href="<?php echo base_url('superadmin/logout'); ?>"><span class="glyphicon glyphicon-off"></span></a></li>
+			</ul>
+		</nav>
+		<div class="col-md-3 sidebar">
+			<div class="welcome">
+				<div class="user-image">
+					<?php $picture = $this->db->select('image')->get('superadmin')->result(); ?>
+					<?php $picture = $picture[0]->image; ?>
+					<?php if(strcmp($picture, '') != 0): ?>
+						<img src="<?php echo base_url('assets/images/profile/superadmin/'.$picture); ?>" height="80px" width="80px">
+					<?php else: ?>
+						<img src="<?php echo base_url('assets/images/default.jpg'); ?>" height="80px" width="80px">
+					<?php endif; ?>
+				</div>
+				<div class="username">Welcome <?php echo ucfirst($this->session->userdata('superadmin')); ?></div>
+			</div>
+			<nav>
+				<ul class="sidebar-navigation">
+					<li><a href="<?php echo base_url('superadmin'); ?>"><span class="glyphicon glyphicon-home fav-icon"></span>Home</a></li>
+					<li><?php echo anchor('superadmin/create_admin', '<span class="glyphicon glyphicon-list fav-icon"></span>Create Admin') ?></li>
+					<li><?php echo anchor('superadmin/admins', '<span class="glyphicon glyphicon-user fav-icon"></span>Admins'); ?></li>
+				</ul>
+			</nav>
+
+		</div>

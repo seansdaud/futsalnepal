@@ -228,5 +228,22 @@ class SuperAdmin extends CI_Controller{
 			$this->load->view('superadmin/includes/template', $data);
 		}
 	}
+	function changeProfilePicture(){
+		if(!empty($_FILES['file'])){
+			$name=$_FILES['file']['name'];
+			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+			$path1= 'superadmin_image'.'.'.$ext;
+  			$path='assets/images/profile/superadmin/'.$path1;
+	  		if($_FILES['file']['error']==0 && move_uploaded_file($_FILES['file']['tmp_name'], $path)){
+				$data=array(
+					'image'=>$path1
+				);
+				$this->db->update('superadmin', $data, "id = 1");
+				redirect('superadmin');
+			}
+			$this->session->set_flashdata('msg', 'Error Occurred. Please choose different file.');
+			redirect('superadmin/settings');
+		}
+	}
 
 }
