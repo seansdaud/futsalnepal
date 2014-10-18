@@ -187,7 +187,7 @@ class Futsalnepal extends CI_Controller {
 			redirect('futsalnepal');
 		}
 		else{
-			redirect('user_controller');
+			redirect('futsalnepal');
 		}
 	}
 }

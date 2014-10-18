@@ -9,7 +9,7 @@
 
 		<div class="panel-collapse collapse in" id="changeusername">
 			<div class="panel-body">
-				<?php echo form_open("superadmin/change_username", array('data-toggle' => 'validator')); ?>
+				<?php echo form_open("admin/change_username", array('data-toggle' => 'validator')); ?>
 					
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="New Username" name="new_username" required>
@@ -37,7 +37,7 @@
 
 		<div class="panel-collapse collapse" id="changepassword">
 			<div class="panel-body">
-				<?php echo form_open("superadmin/change_password", array('data-toggle' => 'validator')); ?>
+				<?php echo form_open("admin/change_password", array('data-toggle' => 'validator')); ?>
 					
 					<div class="form-group">
 						<input type="password" class="form-control" name="current_password" placeholder="Current Password" required>
@@ -65,7 +65,7 @@
 
 		<div class="panel-collapse collapse" id="changeemail">
 			<div class="panel-body">
-				<?php echo form_open("superadmin/change_email", array('data-toggle' => 'validator')); ?>
+				<?php echo form_open("admin/change_email", array('data-toggle' => 'validator')); ?>
 					
 					<div class="form-group">
 						<input type="email" pattern="^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$" data-error="Invalid Email" class="form-control" name="new_email" value=" <?php echo set_value('new_email'); ?> " placeholder="New Email" required>
@@ -93,13 +93,13 @@
 
 		<div class="panel-collapse collapse" id="adminimage">
 			<div class="panel-body">
-				<?php echo form_open_multipart("superadmin/changeProfilePicture", array('data-toggle' => 'validator')); ?>
+				<?php echo form_open_multipart("admin/changeProfilePicture", array('data-toggle' => 'validator')); ?>
 					
 					<div>
-						<?php $picture = $this->db->select('image')->get('superadmin')->result(); ?>
+						<?php $picture = $this->db->select('image')->get('admin')->result(); ?>
 						<?php $picture = $picture[0]->image; ?>
 						<?php if(strcmp($picture, '') != 0): ?>
-							<img id="imagePreview1" src='<?php echo base_url('assets/images/profile/superadmin/'.$picture); ?>' width="180px" height="180px">
+							<img id="imagePreview1" src='<?php echo base_url('assets/images/profile/admin/'.$picture); ?>' width="180px" height="180px">
 							<img id="imagePreview" width="120px" height="120px">
 						<?php else: ?>
 							<img id="imagePreview1" src='<?php echo base_url('assets/images/default.jpg'); ?>' width="180px" height="180px">

@@ -15,5 +15,8 @@ $this->load->view('admin/includes/header', $data);
 if($this->session->userdata('admin_logged_in') == true){
 	$this->load->view('admin/includes/nav');
 }
-$this->load->view($content);
+?><div class="col-md-9">
+<?php $this->load->view($content); ?>
+</div>
+<?php
 $this->load->view('admin/includes/footer');
