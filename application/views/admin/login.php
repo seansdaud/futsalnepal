@@ -2,10 +2,9 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title> <?php echo ucfirst($title).' | Admin | Fishtail Travel'; ?> </title>
+	<title> <?php echo ucfirst($title).' | Admin | FutsalNepal'; ?> </title>
 	<link rel="icon" href="<?=base_url()?>/favicon.jpg" type="image/jpg">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/bootstrap.min.css'; ?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/imgareaselect-default.css')?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/admin.css'); ?>">
 	<style type="text/css">
 		body{
@@ -24,6 +23,7 @@
 			padding: 0;
 			background: rgba(103, 92, 124, 0.8);
 			position: absolute;
+
 		}
 
 		.user-image img{
@@ -34,13 +34,17 @@
 			-webkit-border-radius: 50%;
 			overflow: hidden;
 		}
+		.flashdata{
+			display:block;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<?php echo form_open("admin_login/post_login", array('class'=>'admin-login-form', 'data-toggle'=>'validator')); ?>
-				<?php $msg = $this->session->flashdata('msg_login'); if(!empty($msg)): ?>
+				<?php $msg = $this->session->flashdata('feedback_admin_login'); if(!empty($msg)): ?>
 				<div class="alert alert-danger">
 			        <a href="#" class="close" data-dismiss="alert">&times;</a>
 			        <?php echo ucfirst($msg); ?>

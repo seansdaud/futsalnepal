@@ -1,29 +1,30 @@
 
-<div id="show">
-<?php 
-
-date_default_timezone_set("Asia/Katmandu"); 
-echo date('w') +1; 
-echo date( "Y-m-d");
-echo date( "g:i a");
- ?>
+<div class="show">
+	<?php
+		date_default_timezone_set("Asia/Katmandu"); 
+		echo date('w') +1; 
+		echo "</br>";
+		echo "<div class='today'>Date:</div>".date( "Y-m-d")."</br>";
+		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
+ 	?>
+ </div>
 <?php $attributes = array( 'id' => 'myform1');
 echo form_open("admin/update_schedule",$attributes); ?>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
 
 <div id="time"></div>
-<div id="result">
+<div class="panel-body">
 	<table id='mytable' name='futsal-table' border=1 width=100% >
 		<tbody id='my'>
 													<tr>
-															<td name='time'>Time</td>
-															<td name='sunday'><span>Sunday</span></td>
-															<td name='monday'><span>Monday</span></td>
-															<td name='tuesday'><span>Tuesday</span></td>
-															<td name='wednesday'><span>Wednesday</span></td>
-															<td name='thrusday'><span>Thrusday</span></td>
-															<td name='friday'><span>Friday</span></td>
-															<td name='saturday'><span>Saturday</span></td>
+															<td name='time'><span class="day">Time</td>
+															<td name='sunday'><span class="day">Sunday</span></td>
+															<td name='monday'><span class="day">Monday</span></td>
+															<td name='tuesday'><span class="day">Tuesday</span></td>
+															<td name='wednesday'><span class="day">Wednesday</span></td>
+															<td name='thrusday'><span class="day">Thrusday</span></td>
+															<td name='friday'><span class="day">Friday</span></td>
+															<td name='saturday'><span class="day">Saturday</span></td>
 													</tr>
 													<?php foreach ($schedular as $keys ): ?>
 														<?php $time=$keys->time_diff; ?>
