@@ -15,11 +15,10 @@ class Admin_login extends CI_Controller {
 
 	function index(){
 		$data = array(
-			'title' => 'Admin Login',
-			'content' => 'admin/login'
+			'title' => 'Admin Login'
 		);
 
-		$this->load->view('admin/includes/template', $data);
+		$this->load->view('admin/login', $data);
 	}
 
 	function post_login(){
@@ -37,13 +36,8 @@ class Admin_login extends CI_Controller {
 				redirect('admin');
 			}
 			else{
-				$data = array(
-					'title' => 'Admin Login',
-					'content' => 'admin/login',
-					'global_message' => $value
-				);
-
-				$this->load->view('admin/includes/template', $data);
+				$this->session->set_flashdata('feedback_admin_login', 'Please!! provide valid login details.');
+				redirect('admin_login');
 			}
 		}
 	}

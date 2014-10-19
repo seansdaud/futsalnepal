@@ -19,10 +19,9 @@ class SuperAdmin_login extends CI_Controller {
 	function index(){
 		$data = array(
 			'title' => 'login Super Admin',
-			'content' => 'superadmin/login'
 		);
 
-		$this->load->view('Superadmin/includes/template', $data);
+		$this->load->view('Superadmin/login', $data);
 	}
 
 	function postlogin(){
@@ -40,13 +39,10 @@ class SuperAdmin_login extends CI_Controller {
 
 			redirect('superadmin');
 		}
-		$data = array(
-			'title' => 'admin Login',
-			'content' => 'superadmin/login',
-			'global_message' => 'Username and Password does not exists.'
-		);
+		else{
+			$this->session->set_flashdata('feedback_superadmin_login', 'Please!! provide valid login details.');
+			redirect('superadmin_login');
+		}
 
-		$this->load->view('Admin/Includes/template', $data);
 	}
-
 }
