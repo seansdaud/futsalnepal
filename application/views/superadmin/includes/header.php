@@ -11,4 +11,3 @@
 	<script type="text/javascript" src="<?php echo site_url().'assets/ckeditor/ckeditor.js' ?>"></script>
 </head>
 <body>
-	<div class="container">

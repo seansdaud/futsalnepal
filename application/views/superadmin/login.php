@@ -12,7 +12,7 @@
 			background: rgba(0,0,255,.4);
 			margin: 0;
 			padding: 0;		
-			background-image: url('assets/css/road.jpg') !important;
+			background-image: url('assets/css/pine.jpg') !important;
 			background-repeat: no-repeat !important;
 			-moz-background-size:100% 100%; /* Firefox */
 			background-size:100% 100%;
@@ -40,7 +40,7 @@
 	<div class="container">
 		<div class="row">
 			<?php echo form_open("superAdmin_login/postlogin", array('class'=>'admin-login-form', 'data-toggle'=>'validator')); ?>
-				<?php $msg = $this->session->flashdata('msg_login'); if(!empty($msg)): ?>
+				<?php $msg = $this->session->flashdata('feedback_superadmin_login'); if(!empty($msg)): ?>
 				<div class="alert alert-danger">
 			        <a href="#" class="close" data-dismiss="alert">&times;</a>
 			        <?php echo ucfirst($msg); ?>
