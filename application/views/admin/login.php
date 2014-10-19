@@ -34,6 +34,11 @@
 			-webkit-border-radius: 50%;
 			overflow: hidden;
 		}
+		.loading{
+			margin:0px auto;
+			position: fixed;
+
+		}
 	</style>
 </head>
 <body>

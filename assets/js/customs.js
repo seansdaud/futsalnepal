@@ -193,7 +193,7 @@ function update_ajax(){
           	}, 2000);
      		  },
      		   beforeSend : function (){
-                 $('#id').html("<img src='"+base_url+"/images/ajax_load.gif'>");
+                 $('#id').html("<div class='loading'><img src='"+base_url+"/images/ajax_load.gif'></div>");
 
             },
           	    error: function(jqXHR, textStatus, errorThrown){ 

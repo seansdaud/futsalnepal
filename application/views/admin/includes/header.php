@@ -9,7 +9,12 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/jquery.timepicker.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/admin.css'); ?>">
 
-
+		<style type="text/css">
+		.loading{
+			position: fixed;
+			margin: 0px auto;
+		}
+		</style>
 	<script type="text/javascript" src="<?php echo site_url().'assets/ckeditor/ckeditor.js' ?>"></script>
 </head>
 <body>
