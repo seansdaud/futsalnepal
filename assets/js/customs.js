@@ -42,7 +42,7 @@ function newstart(first){
 	for (var i = 0; i< diff; i++) {
 		 array.push(i);
 	};
-	$("#result").html("<table id='mytable' name='futsal-table' border=1 width=100% >"+
+	$("#result").html("<table id='mytable' class='table' name='futsal-table' border=1 width=100% >"+
 		"<tbody id='my'>"+
 														"<tr>"+
 															"<td name='time'>Time</td>"+
@@ -59,13 +59,13 @@ function newstart(first){
 														    $.each(array, function(val) {
 														        $container.append($("<tr/>").append(
 														        	 $("<td/>").html("<span>"+start_time1+"--"+newstart(start_time1)+"</span>"),
-														        	  $("<td/>").html("<span><input type='text' name='1"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input type='text' name='2"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input type='text' name='3"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input type='text' name='4"+val+"'></span>"),
-														        	   $("<td/>").html("<span><input type='text' name='5"+val+"'></span>"),
-														        	    $("<td/>").html("<span><input type='text' name='6"+val+"'></span>"),
-														        	     $("<td/>").html("<span><input type='text' name='7"+val+"'></span>")
+														        	  $("<td/>").html("<span><input class='form-control' type='text' name='1"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control' type='text' name='2"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control' type='text' name='3"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control' type='text' name='4"+val+"'></span>"),
+														        	   $("<td/>").html("<span><input class='form-control' type='text' name='5"+val+"'></span>"),
+														        	    $("<td/>").html("<span><input class='form-control' type='text' name='6"+val+"'></span>"),
+														        	     $("<td/>").html("<span><input class='form-control' type='text' name='7"+val+"'></span>")
 														        	
 														        ));
 														      
@@ -76,7 +76,7 @@ function newstart(first){
 
 														   return $container.html();
 														});
-$("#submit").html("<input type='submit'  value='update'>");
+$("#submit").html("<input type='submit' class='btn btn-primary ' value='update'>");
 
 });	
 
