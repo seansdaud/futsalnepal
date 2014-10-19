@@ -34,9 +34,11 @@
 			-webkit-border-radius: 50%;
 			overflow: hidden;
 		}
+
 		.flashdata{
 			display:block;
 			text-align: center;
+
 		}
 	</style>
 </head>
