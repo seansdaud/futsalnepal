@@ -662,3 +662,10 @@ h2{
 .day{
 	font-weight: bold;
 }
+
+.feedback-message{
+	text-align: center;
+	font-size:18px;
+	color: red;
+	font-weight: bold;
+}

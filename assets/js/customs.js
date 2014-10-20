@@ -320,3 +320,4 @@ formatted = next_date.getUTCFullYear() + '-' + padNumber(next_date.getUTCMonth()
             } 
 return formatted;
 }
+
