@@ -1,4 +1,5 @@
-
+<div id="fluid-container">
+<div class="col-md-9">
 <?php 
 $date = new DateTime();
 $timestamp= $date->getTimestamp();
@@ -9,7 +10,7 @@ print_r($dw+1)?>
 <?php echo $admins->username; ?>
 </br>
 Price table
-			<table border="4">
+			<table class="table" border="4">
 										<tr>
 											<td>Time</td>
 											<td>sunday</td>
@@ -66,3 +67,17 @@ Price table
 
 </table>
 <?php endforeach; ?>
+</div>
+
+<div class="col-md-3 side">
+	<div class="row">
+		<?php
+			$this->load->view('users/user_login_view');
+		?>
+	</div>
+	<div class="row">
+		<?php 
+			$this->load->view('users/user_signup_view');
+		 ?>
+	</div>
+</div>
