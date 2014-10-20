@@ -2,9 +2,10 @@
 <?php $attributes = array( 'id' => 'myform1');
 echo form_open("admin/update_schedule",$attributes); ?>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
-
+<div class="panel-body"><div id="id"></div>
 <div id="time"></div>
-<div class="panel-body">
+
+
 	<table id='mytable' class="table" name='futsal-table' border=1 width=100% >
 													
 			<tr>
@@ -61,10 +62,9 @@ echo form_open("admin/update_schedule",$attributes); ?>
 
 
 		</table>
-	<input type='button' onclick='update_ajax()'  value='update'>
+	<input type='button' onclick='update_ajax()'  class="btn btn-primary" value='update'>
 </div>
-<div id="id"></div>
 
-<div id="message"></div>
+<div id="message"  ></div>
 <?php echo form_close(); ?>
 <!-- </div> -->

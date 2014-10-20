@@ -270,7 +270,7 @@ class Admin extends CI_Controller {
 		if($username=$this->input->post('user')){
 			if($user = $this->db->where('username', $username)->get('user')->result()){
 			$data2 = array(
-				'user_id' => $user[0]->Id
+				'user_id' => $user[0]->id
 						);
 		}
 		else {
@@ -306,17 +306,55 @@ class Admin extends CI_Controller {
 			$date = $this->db->where('id', $this->uri->segment(3))->get('scheduler')->result();
 			// print_r($date[0]->day);
 			$data = array(
-					'schedule_id'=>$this->uri->segment(3),
-					'user_id'=>$this->uri->segment(4),
-					'booking_date'=>date("Y-m-d")
+					'schedule_id'=>$this->input->post('key_id'),
+					'user_id'=>$this->input->post('user_id'),
+					'booking_date'=>$this->input->post('date'),
 					);
+			print_r($data);
+		
 			$booking_id=$this->work_model->booking($data);
 			$data1=array('book_status'=>$booking_id);
-			$this->db->where('id',$this->uri->segment(3));
+			$this->db->where('id',$this->input->post('key_id'));
 			$this->db->update('scheduler',$data1);
-			$data2 = array('user'=>$this->uri->segment(4));
+			$data2 = array('user'=>$this->input->post('user_id'));
 			$this->session->set_flashdata('new',$data2);
 			redirect("admin/pre_book_schedule");
+	}
+	function searchuser(){
+			$search_content=$this->input->post('mem');
+				if ($search_content!=null) {
+				$result=$this->admin_model->search_user($search_content);
+				$result_count=$this->admin_model->search_user_num($search_content);
+				if($result_count!=null){
+				$suffix=($result_count != 1 )?'s':'';
+				$res= array();
+				foreach ($result as $key ) {
+					$data = array(
+					'id'=>$key->id,
+					'uname'=> $key->username,
+					);
+					array_push($res, $data);
+				}
+				print_r(json_encode($res));
+				}
+				else{
+					$res= array();
+					$data = array(
+					'uname'=> 'emptysetfound',
+					);
+					array_push($res, $data);
+						print_r(json_encode($res));
+				}
+				}
+				else{
+						$res= array();
+					$data = array(
+					'uname'=> 'emptysetfound',
+					);
+					array_push($res, $data);
+						print_r(json_encode($res));
+				}
+
 	}
 
 }
