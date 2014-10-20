@@ -320,6 +320,7 @@ formatted = next_date.getUTCFullYear() + '-' + padNumber(next_date.getUTCMonth()
             } 
 return formatted;
 }
+
 $(document).ready(function() {
 
 var today = $("#itoday").val();

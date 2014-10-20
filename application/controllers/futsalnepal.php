@@ -22,8 +22,6 @@ class Futsalnepal extends CI_Controller {
 		$data['admin']=$this->work_model->get_admin();
 		$data['schedular']=$this->db->get('scheduler')->result();
 		$this->load->view('users/includes/template', $data);
-		$this->login();
-		$this->signup();
 	}
 
 	public function create(){
@@ -36,7 +34,7 @@ class Futsalnepal extends CI_Controller {
 		$this->form_validation->set_rules('contactno', 'Contact Number', 'required|trim|integer|xss_clean|min_val[10]|is_unique[user.contactno]');
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->session->set_flashdata('feedback_signup', 'Please!! provide valid details');
+			$this->session->set_flashdata('feedback_signup', 'Username not available! Choose different one.');
 			redirect('futsalnepal');
 		}
 		else
@@ -92,17 +90,6 @@ class Futsalnepal extends CI_Controller {
 	}
 
 	public function user_login(){
-		$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|');
-
-		if ($this->form_validation->run() == FALSE)
-		{
-			$this->session->set_flashdata('feedback', 'Please!! provide login details');
-			redirect('futsalnepal');
-		}
-		else{
 			$data=array(
 					'username'=>$this->input->post('username'),
 					'password'=>sha1($this->input->post('password'))
@@ -130,9 +117,6 @@ class Futsalnepal extends CI_Controller {
 				$this->session->set_flashdata('feedback', 'username or password not matched! </br> Please sign in again!');
 				redirect('futsalnepal');
 			}
-
-		}
-
 	}
 
 	public function verify(){
