@@ -1,15 +1,16 @@
 <div class="panel-body">
 	<?php echo form_open("admin/pre_book_schedule"); ?>
-		<div class="form-group">
+		<div class="form-group ">
 			<label for="username">Provide valid Username:</label>
 		</div>
-		<div class="form-group">
-			<input type="text" name="user">
+		<div class="form-group ">
+			<input type="text" name="user" class="form-control" placeholder="Choose User" id="searchmem">
 			</br>
-		</div>
-		<div class="submit">
-			<input type ="submit" value="Book">
+			<input type="hidden" id="base_url1" value="<?php echo base_url(); ?>">
+			<input type ="submit" value="Book" class="btn btn-primary">
 			</br>
-		</div>		
+	</div>
 	<?php echo form_close(); ?>
 </div>
+<div id="display"></div>
+<div class="id"></div>

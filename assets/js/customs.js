@@ -174,6 +174,7 @@ $("#submit").html("<input type='submit' class='btn btn-primary ' value='update'>
 //     	get_ajax();
 //     });
 // }
+
 function update_ajax(){
 		var base_url= $('#base_url').val();
 		var form_data = $("#myform1").serialize();
@@ -187,9 +188,11 @@ function update_ajax(){
 
           	  	if (data==1) {
           	  		$('#message').html("Updated Successfully");
+          	  		 $('#message').addClass("alert alert-danger");
           	  	};
           	  setTimeout(function () {
           	  $('#message').html("");
+          	   $('#message').removeClass("alert alert-danger");
           	}, 2000);
      		  },
      		   beforeSend : function (){
@@ -197,9 +200,123 @@ function update_ajax(){
 
             },
           	    error: function(jqXHR, textStatus, errorThrown){ 
-      alert( jqXHR.responseText);
+      // alert( jqXHR.responseText);
                
           }
           	});
 
+}
+$("#searchmem").keyup(function(){
+		var mem = $(this).val();	
+		var url = $('#base_url1').val();
+			$.ajax({
+				type:'POST',
+					url: url+'admin/searchuser',
+				data:{
+					mem:mem
+				},
+				dataType: 'json',
+				success:function(data)
+				{
+					if(data[0].uname=='emptysetfound'){
+						$('#display').html("");	
+						$('#display').html("No Username Found");
+          	  		 $('#display').addClass("alert alert-danger");
+
+					}
+					else{
+
+					var array = [];
+					for (var i = 0; i< data.length; i++) {
+						 array.push(i);
+					};
+
+						$('#display').removeClass("alert alert-danger");
+						$('#display').html("");
+						$('#display').html("<table class='table table-striped'>"+
+							"<tbody>"+
+									"<tr >"+
+										"<th>id</th>"+
+										"<th>Name</th>"+
+										"<th>Action</th>"+
+									"</tr>"+
+									"</tbody>");
+						jQuery("#display tbody").append(function(){
+														 var $container = $('<div></div>');
+														    $.each(array, function(val) {
+														        $container.append($("<tr/>").append(
+														        	 $("<td/>").html(val+1),
+														        	  $("<td/>").html("<div class='data"+val+"'>"+data[val].uname+"</div>"), 
+														        	  $("<td/>").html("<input class='btn btn-primary ' id='btnw-"+val+"' onclick='return item("+val+");' type='button' value='Choose'>")
+
+														        ));
+														      $('#display').append("<input class='datahid"+val+" form-control' type='hidden' value='"+data[val].uname+"'>");
+														    });
+
+														   return $container.html();
+														});
+				
+			
+					}
+						$('.id').html("");
+
+     		  },
+     		   beforeSend : function (){
+                 $('.id').html("<div class='loading'><img src='"+url+"/images/ajax_load.gif'></div>");
+
+            },
+				 error: function(jqXHR, textStatus, errorThrown){ 
+				 		$('.id').html("");
+				 	if (jqXHR.responseText) {
+				 			$('.id').html("");
+				 								 	alert(jqXHR.responseText);
+
+				 	};
+
+   
+               
+          }
+			});
+		
+	});
+function item(m){
+	var value = $(".datahid"+m).val();
+	$("#searchmem").val(value);
+}
+$(document).ready(function() {
+
+var today = $("#today").val();
+
+ var now=parseInt(today) ;
+var date = $("#date").val();
+var c=now;
+var s=0;;
+for (var i = 0; i <= 6; i++) {
+	var data=increasedate(date,i);
+	$(".din"+c+"").html(data);
+	$(".date_send"+c+"").html("<input type='hidden' name='date' value='"+data+"'>");
+	c=c+1;
+	if (s==1) {
+		b=c-1;
+		$(".rows"+b+"").addClass("warning");
+	};
+	if(c==8){
+		c=1;
+		s=1;
+	}
+	
+};
+
+});
+function increasedate(date,time){
+
+date1= new Date(date);
+next_date = new Date(date1.setDate(date1.getDate() + time));
+formatted = next_date.getUTCFullYear() + '-' + padNumber(next_date.getUTCMonth() + 1) + '-' + padNumber(next_date.getUTCDate())
+       function padNumber(number) {
+                var string  = '' + number;
+                string      = string.length < 2 ? '0' + string : string;
+                return string;
+            } 
+return formatted;
 }

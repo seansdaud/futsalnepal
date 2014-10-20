@@ -62,4 +62,27 @@ class Admin_model extends CI_Model {
 		}
 		return "Invalid password.";
 	}
+		function search_user($search_content){
+		$row = $this->db->select('id')->like('username', $search_content, 'both')->get('user')->num_rows();
+		if($row!=0){
+			$res=$this->db->like('username', $search_content, 'both')->get('user')->result();
+			
+			return $res;
+		}
+		else{
+			$res1 = new stdClass();
+			return $res1;
+		}
+	}
+	function search_user_num($search_content){
+		$row = $this->db->select('id')->like('username', $search_content, 'both')->get('user')->num_rows();
+		if($row!=0){
+			$res=$this->db->like('username', $search_content, 'both')->get('user')->num_rows();
+			
+			return $res;
+		}
+		else{
+			return $row;
+		}
+	}
 }
