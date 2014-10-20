@@ -2,7 +2,6 @@
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
-		echo $user_id;
 		echo date('w') +1; 
 		$day=date('w') +1; 
 		echo "<input type='hidden' id='today' value='".$day."' >";
@@ -21,7 +20,7 @@
 	<table id='mytable' name='futsal-table'  class='table' border=1 width=100% >
 		<tbody id='my'>
 													<tr>
-															<td name='time'><span class="day">Time </td>
+															<td name='time'><span class="day">Time </span></td>
 															<td name='sunday'><span class="day">Sunday</span><div class="din1"></div></td>
 															<td name='monday'><span class="day">Monday</span><div class="din2"></div></td>
 															<td name='tuesday'><span class="day">Tuesday</span><div class="din3"></div></td>

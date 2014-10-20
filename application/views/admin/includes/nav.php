@@ -28,6 +28,7 @@
 					<li><a href="<?php echo base_url('admin/schedular') ?>"><span class="glyphicon glyphicon-time fav-icon"></span>Schedular</a></li>
 					<li><a href="<?php echo base_url('admin/book_schedular') ?>"><span class="glyphicon glyphicon-bookmark fav-icon"></span>Book Schedule</a></li>
 					<li><a href="<?php echo base_url('admin/show_schedular') ?>"><span class="glyphicon glyphicon-check fav-icon"></span>Show Schedular</a></li>
+					<li><a href="<?php echo base_url('admin/detail_schedular') ?>"><span class="glyphicon glyphicon-check fav-icon"></span>Today's Schedule</a></li>
 				</ul>
 			</nav>
 

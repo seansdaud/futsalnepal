@@ -356,5 +356,13 @@ class Admin extends CI_Controller {
 				}
 
 	}
+	function detail_schedular(){
+		$data = array(
+			'title' => 'Today Schedule',
+			'content' => 'admin/schedule_today'
+		);
+		$data['booking'] = $this->db->get('booking')->result();
+		$this->load->view('admin/includes/template',$data);
+	}
 
 }
