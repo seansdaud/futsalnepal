@@ -15,12 +15,15 @@ class Admin_model extends CI_Model {
 	function change_username(){
 		$this->db->where('password', sha1($this->input->post('password')));
 		if($this->db->get('admin')->num_rows() == 1 ){
-
 			$data = array(
 				'username' => $this->input->post('new_username')
 			);
-
-			$this->db->where('password', sha1($this->input->post('password')));
+			$this->session->unset_userdata('admin');
+			$userdata=array(
+					'admin'=>$this->input->post('new_username')
+				);
+			$this->session->set_userdata($userdata);
+			$this->db->where('id', $this->input->post('hidden_id'));
 			$update = $this->db->update('admin', $data);
 
 			if($update){
@@ -28,7 +31,7 @@ class Admin_model extends CI_Model {
 			}
 			return false;
 		}
-		return "Invalid password.";
+		return 0;
 	}
 
 	function change_password(){
@@ -39,13 +42,13 @@ class Admin_model extends CI_Model {
 				'password' => sha1($this->input->post('new_password'))
 			);
 
-			$this->db->where('username', $this->session->userdata('admin'));
+			$this->db->where('id', $this->input->post('hidden_id'));
 			if($this->db->update('admin', $data)){
 				return true;
 			}
 			return false;
 		}
-		return "Invalid current password.";
+		return 0;
 	}
 
 	function change_email(){
@@ -54,13 +57,13 @@ class Admin_model extends CI_Model {
 
 			$data['email'] = $this->input->post('new_email');
 
-			$this->db->where('username', $this->session->userdata('admin'));
+			$this->db->where('id', $this->input->post('hidden_id'));
 			if($this->db->update('admin', $data)){
 				return true;
 			}
 			return false;
 		}
-		return "Invalid password.";
+		return 0;
 	}
 		function search_user($search_content){
 		$row = $this->db->select('id')->like('username', $search_content, 'both')->get('user')->num_rows();

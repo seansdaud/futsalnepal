@@ -39,36 +39,27 @@ class Admin extends CI_Controller {
 	}
 
 	function change_username(){
-		$this->form_validation->set_rules('new_username', 'New Username', 'trim|xss_clean');
+		$this->form_validation->set_rules('new_username', 'New Username', 'trim|xss_clean|is_unique[admin.username]');
 		$this->form_validation->set_rules('password', 'Password', 'xss_clean');
 
 		if($this->form_validation->run() == true){
 			$confirm = $this->admin_model->change_username();
 			if($confirm === true){
-				$msg = "Username successfully changed";
+				$this->session->set_flashdata('feedback', 'username changed.');
+				redirect('admin');
 			}
 			else if($confirm === false){
-				$msg = "Error occurred. Please try again.";
+				$this->session->set_flashdata('feedback', 'Error occured. Please try again.');
+				redirect('admin/settings');
 			}
-			else{
-				$msg = $confirm;
+			else if($confirm==0){
+				$this->session->set_flashdata('feedback', 'Invalid password.');
+				redirect('admin/settings');
 			}
-
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings',
-				'global_message' => $msg
-			);
-
-			$this->load->view('admin/includes/template', $data);
 		}
 		else{
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings'
-			);
-
-			$this->load->view('admin/includes/template', $data);
+			$this->session->set_flashdata('feedback', 'Provide valid details.');
+			redirect('admin/settings');
 		}
 	}
 
@@ -79,30 +70,21 @@ class Admin extends CI_Controller {
 		if($this->form_validation->run() == true){
 			$confirm = $this->admin_model->change_password();
 			if($confirm === true){
-				$msg = "Password Successfully changed.";
+				$this->session->set_flashdata('feedback', 'Password changed successfully.');
+				redirect('admin');
 			}
 			else if($confirm === false){
-				$msg = "Error occurred. Please try again.";
+				$this->session->set_flashdata('feedback', 'error occured. Please try again.');
+				redirect('admin/settings');
 			}
-			else{
-				$msg = $confirm;
+			else if($cofirm==0){
+				$this->session->set_flashdata('feedback', 'Invalid current password.');
+				redirect('admin/settings');
 			}
-
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings',
-				'global_message' => $msg
-			);
-
-			$this->load->view('admin/includes/template', $data);
 		}
 		else{
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings'
-			);
-
-			$this->load->view('admin/includes/template', $data);
+			$this->session->set_flashdata('feedback', 'Minimum character for password is 6.');
+			redirect('admin/settings');
 		}
 	}
 
@@ -113,46 +95,43 @@ class Admin extends CI_Controller {
 		if($this->form_validation->run() == true){
 			$confirm = $this->admin_model->change_email();
 			if($confirm === true){
-				$msg = "Email Successfully changed.";
+				$this->session->set_flashdata('feedback', 'Email changed successfully.');
+				redirect('admin');
 			}
 			else if($confirm === false){
-				$msg = "Error occurred. Please try again.";
+				$this->session->set_flashdata('feedback', 'Error occured. Please try again.');
+				redirect('admin/settings');
 			}
-			else{
-				$msg = $confirm;
+			else if($confirm==0){
+				$this->session->set_flashdata('feedback', 'password not matched.');
+				redirect('admin/settings');
 			}
-
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings',
-				'global_message' => $msg
-			);
-
-			$this->load->view('includes/template', $data);
 		}
 		else{
-			$data = array(
-				'title' => 'Admin Settings',
-				'content' => 'admin/settings'
-			);
-
-			$this->load->view('includes/template', $data);
+			$this->session->set_flashdata('feedback', 'Please provide valid details.');
+			redirect('admin/settings');
 		}
 	}
 	function changeProfilePicture(){
 		if(!empty($_FILES['file'])){
+			$id=$this->input->post('hidden_id');
+			$result=$this->db->select('image')->where('id',$id)->get('admin')->result();
+			$link = "assets/images/profile/admin/".$result[0]->image;
+			unlink($link);
 			$name=$_FILES['file']['name'];
 			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-			$path1= 'admin_image'.'.'.$ext;
+			$path1= $id.'.'.$ext;
   			$path='assets/images/profile/admin/'.$path1;
 	  		if($_FILES['file']['error']==0 && move_uploaded_file($_FILES['file']['tmp_name'], $path)){
 				$data=array(
 					'image'=>$path1
 				);
-				$this->db->update('admin', $data, "id = 1");
+				$this->db->where('id',$id);
+				$this->db->update('admin', $data);
+				$this->session->set_flashdata('feedback', 'profile picture changed successfully.');
 				redirect('admin');
 			}
-			$this->session->set_flashdata('msg', 'Error Occurred. Please choose different file.');
+			$this->session->set_flashdata('feedback', 'Error Occurred. Please choose different file.');
 			redirect('admin/settings');
 		}
 	}
