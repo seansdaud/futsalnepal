@@ -11,7 +11,7 @@
 			background: rgba(0,0,255,.4);
 			margin: 0;
 			padding: 0;		
-			background-image: url('assets/css/road.jpg') !important;
+			background-image: url('assets/images/default.jpg') !important;
 			background-repeat: no-repeat !important;
 			-moz-background-size:100% 100%; /* Firefox */
 			background-size:100% 100%;
@@ -63,12 +63,7 @@
 						</div>
 					</div>
 					<div class="col-md-2 user-image">
-						<?php $picture = $this->db->select('image')->get('admin')->result(); ?>
-						<?php if(!empty($picture[0])): ?>
-							<img src="<?php echo base_url('assets/images/profile/admin/'.$picture[0]->image); ?>" height="80px" width="80px">
-						<?php else: ?>
 							<img src="<?php echo base_url('assets/images/default.jpg'); ?>" height="80px" width="80px">
-						<?php endif; ?>
 					</div>
 					<div class="col-md-5">
 						<div class="form-group field">
