@@ -658,6 +658,13 @@ h2{
 	background:e22999;
 	padding: 20px;
 	font-size: 18px;
+
+}
+.showdate{
+	margin-left: 350px;
+	font-size: 40px;
+	font-family: Georgia, serif;
+	color: #999;
 }
 .day{
 	font-weight: bold;
@@ -668,4 +675,14 @@ h2{
 	font-size:18px;
 	color: red;
 	font-weight: bold;
+}
+.nav-tabs{
+	margin-left: 191px;
+width: 64%;
+}
+.detailtable{
+	margin-top: -12px;
+}
+.tabbody{
+	padding: 17px;
 }
