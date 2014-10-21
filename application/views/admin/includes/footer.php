@@ -1,4 +1,5 @@
-	
+				</div>
+			</div>	
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/js.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/bootstrap.min.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/jquery.timepicker.js' ?>"></script>
@@ -7,6 +8,12 @@
 	<script type="text/javascript">$('input[name=end_time]').timepicker();</script>
 
 	<script type="text/javascript">
+	 $("#home .sidebar-navigation a:contains('Home')").addClass('active');
+   $("#scheduler .sidebar-navigation a:contains('Schedular')").addClass('active');
+   $("#book .sidebar-navigation a:contains('Book Schedule')").addClass('active');
+   $("#book .sidebar-navigation #book").addClass('in');
+    $("#showschedular .sidebar-navigation a:contains('Update Schedule')").addClass('active');
+     $("#todayschedular .sidebar-navigation a:contains('Today's Schedule')").addClass('active');
 		$("#imagePreview  ").hide();
 
 		$(function() {
