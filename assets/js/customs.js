@@ -189,6 +189,7 @@ function update_ajax(){
           	  	if (data==1) {
           	  		$('#message').html("Updated Successfully");
           	  		 $('#message').addClass("alert alert-danger");
+
           	  	};
           	  setTimeout(function () {
           	  $('#message').html("");
@@ -206,9 +207,12 @@ function update_ajax(){
           	});
 
 }
+	$('#btn_book').prop('disabled',true);
 $("#searchmem").keyup(function(){
+	$('#btn_book').prop('disabled',true);
 		var mem = $(this).val();	
 		var url = $('#base_url1').val();
+
 			$.ajax({
 				type:'POST',
 					url: url+'admin/searchuser',
@@ -218,6 +222,7 @@ $("#searchmem").keyup(function(){
 				dataType: 'json',
 				success:function(data)
 				{
+				
 					if(data[0].uname=='emptysetfound'){
 						$('#display').html("");	
 						$('#display').html("No Username Found");
@@ -228,6 +233,9 @@ $("#searchmem").keyup(function(){
 
 					var array = [];
 					for (var i = 0; i< data.length; i++) {
+							 if(data[i].uname==mem){
+								$('#btn_book').prop('disabled',false);
+							 };
 						 array.push(i);
 					};
 
@@ -282,11 +290,11 @@ $("#searchmem").keyup(function(){
 function item(m){
 	var value = $(".datahid"+m).val();
 	$("#searchmem").val(value);
+	$('#btn_book').prop('disabled',false);
 }
 $(document).ready(function() {
 
 var today = $("#today").val();
-
  var now=parseInt(today) ;
 var date = $("#date").val();
 var c=now;
@@ -295,6 +303,7 @@ for (var i = 0; i <= 6; i++) {
 	var data=increasedate(date,i);
 	$(".din"+c+"").html(data);
 	$(".date_send"+c+"").html("<input type='hidden' name='date' value='"+data+"'>");
+	$(".date_get"+c+"").html("Date: "+data);
 	c=c+1;
 	if (s==1) {
 		b=c-1;
@@ -323,7 +332,7 @@ return formatted;
 
 $(document).ready(function() {
 
-var today = $("#itoday").val();
+var today = $("#today").val();
 var now=parseInt(today) ;
 	$(" ."+now).addClass("active");
 });

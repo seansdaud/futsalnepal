@@ -2,6 +2,8 @@
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
+		$name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
+		echo "Booking for ".$name[0]->name."<br/>";
 		echo date('w') +1; 
 		$day=date('w') +1; 
 		echo "<input type='hidden' id='today' value='".$day."' >";
@@ -17,7 +19,7 @@
 
 <div id="time"></div>
 <div class="panel-body">
-	<table id='mytable' name='futsal-table'  class='table' border=1 width=100% >
+	<table id='mytable' name='futsal-table'  class='table ' border=1 width=100% >
 		<tbody id='my'>
 													<tr>
 															<td name='time'><span class="day">Time </span></td>
@@ -54,7 +56,7 @@
 															<?php else: ?>
 																<?php echo form_open("admin/book"); ?>
 																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
 																<div class='date_send<?php echo $k;?>'></div>
 																<input  type="submit"  class="btn btn-danger"  value="Book" >
 																<?php echo form_close(); ?>
@@ -70,7 +72,7 @@
 															<?php else: ?>
 															<?php echo form_open("admin/book"); ?>
 																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
 																<div class='date_send<?php echo $k;?>'></div>
 																<input  type="submit"  class="btn btn-danger"  value="Book" >
 																<?php echo form_close(); ?>
@@ -89,7 +91,7 @@
 															<?php else: ?>
 															<?php echo form_open("admin/book");  ?>
 																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
 																<div class='date_send<?php echo $k;?>'></div>
 																<input  type="submit"  class="btn btn-danger"  value="Book" >
 																<?php echo form_close(); ?>
