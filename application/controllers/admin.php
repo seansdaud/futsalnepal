@@ -33,7 +33,8 @@ class Admin extends CI_Controller {
 	function settings(){
 		$data = array(
 			'title' => 'Admin Settings',
-			'content' => 'admin/settings'
+			'content' => 'admin/settings',
+			'id'=>''
 		);
 
 		$this->load->view('admin/includes/template', $data);
