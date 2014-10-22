@@ -55,7 +55,7 @@
 							</div>
 			
 					<li><a href="<?php echo base_url('admin/show_schedular') ?>"><span class="glyphicon glyphicon-check fav-icon"></span>Update Schedule</a></li>
-					<li><a href="<?php echo base_url('admin/detail_schedular') ?>"><span class="glyphicon glyphicon-check fav-icon"></span>Today's Schedule</a></li>
+					<li><a href="<?php echo base_url('admin/detail_schedular') ?>"><span class="glyphicon glyphicon-check fav-icon"></span>Today's Booking</a></li>
 				</ul>
 			</nav>
 

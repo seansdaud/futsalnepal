@@ -15,6 +15,17 @@ class Futsalnepal extends CI_Controller {
 	}
 
 	function index(){
+		date_default_timezone_set("Asia/Katmandu"); 
+		$date=date("Y-m-d"); 
+		$this->db->where('booking_date <', $date);
+		$book=$this->db->get('booking')->result();
+		foreach ($book as $key ) {
+
+			$dat=array('book_status'=>'0');
+			$this->db->where('book_status',$key->id);
+		
+			$this->db->update('scheduler',$dat);
+		}
 		$data = array(
 			'title' => 'Futsal Nepal',
 			'content' => 'users/home'

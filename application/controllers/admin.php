@@ -15,7 +15,17 @@ class Admin extends CI_Controller {
 	}
 
 	function index(){
+		date_default_timezone_set("Asia/Katmandu"); 
+		$date=date("Y-m-d"); 
+		$this->db->where('booking_date <', $date);
+		$book=$this->db->get('booking')->result();
+		foreach ($book as $key ) {
 
+			$dat=array('book_status'=>'0');
+			$this->db->where('book_status',$key->id);
+		
+			$this->db->update('scheduler',$dat);
+		}
 		$data = array(
 			'title' => 'Admin Home',
 			'content' => 'admin/home',
@@ -171,12 +181,12 @@ class Admin extends CI_Controller {
 		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
 		$adminid=$admin[0]->id;
 		$new=$this->db->where('admin_id',$adminid)->get('scheduler')->result();
-		foreach ($new as $key) {
+		// foreach ($new as $key) {
 
-			if($this->db->where("schedule_id",$key->id)){
-			$this->db->delete('booking');
-			}
-		}
+		// 	if($this->db->where("schedule_id",$key->id)){
+		// 	$this->db->delete('booking');
+		// 	}
+		// }
 		$this->work_model->delete_schedule($adminid);
 		$diff=$this->input->post('diff');
 		$j=-1;
@@ -268,7 +278,7 @@ class Admin extends CI_Controller {
 				$data = array(
 			'title' => 'Book schedular',
 			'content' => 'admin/choose_player',
-			'id'=>'book'
+			'id'=>'books'
 		);
 
 		}
@@ -276,7 +286,7 @@ class Admin extends CI_Controller {
 				$data = array(
 			'title' => 'Book schedular',
 			'content' => 'admin/type_player',
-			'id'=>'book'
+			'id'=>'books'
 		);
 		}
 	
@@ -299,7 +309,7 @@ class Admin extends CI_Controller {
 			$data = array(
 				'title' => 'Book schedular',
 				'content' => 'admin/bookschedular',
-				'id'=>'book'
+				'id'=>'books'
 			);
 			$data['schedular']= $this->db->get('scheduler')->result();
 			$this->load->view('admin/includes/template', array_merge($data,$data1));
@@ -364,7 +374,7 @@ class Admin extends CI_Controller {
 		$data = array(
 				'title' => 'Detail schedule',
 				'content' => 'admin/schedule_today',
-				'id'=>'book'
+				'id'=>'todayschedular'
 			);
 		$this->load->view('admin/includes/template',$data);
 	}
@@ -391,7 +401,7 @@ class Admin extends CI_Controller {
 			$data = array(
 				'title' => 'Book schedular',
 				'content' => 'admin/bookschedular',
-				'id'=>'book'
+				'id'=>'books'
 			);
 			$data['schedular']= $this->db->get('scheduler')->result();
 			$this->load->view('admin/includes/template', array_merge($data,$data1));
