@@ -678,11 +678,14 @@ h2{
 }
 .nav-tabs{
 	margin-left: 191px;
-width: 64%;
+	width: 64%;
 }
 .detailtable{
 	margin-top: -12px;
 }
 .tabbody{
 	padding: 17px;
+}
+.feedback{
+	text-align:center;
 }

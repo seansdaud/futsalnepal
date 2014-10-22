@@ -1,4 +1,3 @@
-<?php echo ucfirst($message); ?>
 
 <div class="dashboard-wrapper">
 	<div class="row">
