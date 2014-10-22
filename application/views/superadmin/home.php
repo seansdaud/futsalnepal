@@ -1,1 +1,1 @@
-Welcome to Super Admin Home Page.
+<div><?php echo $this->session->flashdata('feedback');?></div>

@@ -25,16 +25,11 @@ class Futsalnepal extends CI_Controller {
 	}
 
 	public function create(){
-	 	$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|');
-		$this->form_validation->set_rules('contactno', 'Contact Number', 'required|trim|integer|xss_clean|min_val[10]|is_unique[user.contactno]');
-		if ($this->form_validation->run() == FALSE)
+	 	$username=$this->input->post('username');
+		$row=$this->db->where('username',$username)->get('user')->num_rows();
+		if ($row==1)
 		{
-			$this->session->set_flashdata('feedback_signup', 'Username not available! Choose different one.');
+			$this->session->set_flashdata('feedback_signup', 'Username not available! Choose a different one.');
 			redirect('futsalnepal');
 		}
 		else
@@ -42,7 +37,7 @@ class Futsalnepal extends CI_Controller {
 				$data=array(
 					'name'=>$this->input->post('name'),
 					'email'=>$this->input->post('email'),
-					'username'=>$this->input->post('username'),
+					'username'=>$username,
 					'activation_code'=>random_string('alnum',50),
 					'password'=>sha1($this->input->post('password')),
 					'contactno'=>$this->input->post('contactno')

@@ -35,19 +35,15 @@ class SuperAdmin extends CI_Controller{
 	}
 
 	function create_admin_post(){
-		$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('username', 'Username', 'trim|min_lenght[5]|is_unique[admin.username]|max_length[15]|xss_clean');
-		$this->form_validation->set_rules('password', 'Password', 'trim|min_lenght[6]|xss_clean');
-		$this->form_validation->set_rules('password-again', 'Confirm Password', 'trim|matches[password]|xss_clean');
-		$this->form_validation->set_rules('email', 'Email', 'trim|is_unique[admin.email]|valid_email|xss_clean');
-
-		if($this->form_validation->run() == false){
-			$this->create_admin();
+		$username=$this->input->post('username');
+		$row=$this->db->where('username',$username)->get('admin')->num_rows();
+		if($row==1){
+			$this->session->set_flashdata('feedback', 'Username already taken. choose a different one!');
+			redirect('superadmin/create_admin');
 		}
 		else{
 			$data = array(
-				'username' => $this->input->post('username'),
+				'username' => $username,
 				'password' => sha1($this->input->post('password')),
 				'email' => $this->input->post('email')
 			);
@@ -56,12 +52,12 @@ class SuperAdmin extends CI_Controller{
 			$query = $this->superadmin_model->create_new_admin($data);
 
 			if($query){
-				$data = array(
-					'title' => 'create Admin',
-					'content' => 'superadmin/home'
-				);
-				$data['global_message'] = 'Admin successfully created';
-				$this->load->view('superadmin/includes/template', $data);
+				$this->session->set_flashdata('feedback', 'New admin successfully created.');
+				redirect('superadmin');
+			}
+			else{
+				$this->session->set_flashdata('feedback', 'Error occured. Please try again');
+				redirect('superadmin');
 			}
 		}
 	}

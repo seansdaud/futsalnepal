@@ -18,11 +18,7 @@
 			'title' => 'welcome',
 			'content' => 'users/welcome'
 			);
-
-			if($query=$this->user_model->get_image()){
-				$data['records']=$query;
-			}
-
+			
 			$this->load->view('users/includes/template', $data);
 		}
 
@@ -33,30 +29,29 @@
 
 
 		function change_password(){
-			$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
-			$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
-			if ($this->form_validation->run() == FALSE)
-				{
-					redirect('user_welcome/user_setting');
-			}
-			else{
-				$result=$this->user_model->change_psw();
-				if($result==1){
-					$this->session->set_flashdata('feedback', 'Your password have been changed');
-					redirect('user_welcome');
-				}
-				else if($result==2){
-					$this->session->set_flashdata('feedback', 'Could not update! please try again!');
-					redirect('user_welcome');
-				}
+		$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
+		$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
 
-				else if($result==0){
-					$this->session->set_flashdata('feedback', 'Your current password do not matched! Provide valid password');
-					redirect('user_welcome');
-				}
+		if($this->form_validation->run() == true){
+			$confirm = $this->user_model->change_password();
+			if($confirm === true){
+				$this->session->set_flashdata('feedback', 'Password changed successfully.');
+				redirect('user_welcome');
 			}
-			
+			else if($confirm === false){
+				$this->session->set_flashdata('feedback', 'error occured. Please try again.');
+				redirect('user_welcome');
+			}
+			else if($cofirm==0){
+				$this->session->set_flashdata('feedback', 'Invalid current password.');
+				redirect('user_welcome');
+			}
 		}
+		else{
+			$this->session->set_flashdata('feedback', 'Minimum character for password is 6.');
+			redirect('user_welcome');
+		}
+	}
 
 		public function user_setting(){
 			$data = array(
@@ -67,41 +62,28 @@
 				$this->load->view('users/includes/template', $data);
 		}
 
-		function do_upload()
-		{
-			$data=array(
-					'image_name'=>$_FILES['image']['name'],
-					'size'=>$_FILES['image']['size'],
-					'type'=>$_FILES['image']['type'],
-					'temp_name'=>$_FILES['image']['tmp_name'],
-					'error'=>$_FILES['image']['error']
-				);	
-			if($data['error']==0){
-				if(isset($data) && !empty($data)){
-					$loc='./images/' ;
-					if(move_uploaded_file($data['temp_name'], $loc.$data['image_name'])){
-						$this->user_model->do_upload($data);
-					}
-					else{
-						echo "upload failed";
-					}
-				}
-				else{
-					echo "choose a file";
-				}
-
+		function changeProfilePicture(){
+		if(!empty($_FILES['file'])){
+			$id=$this->input->post('hidden_id');
+			$result=$this->db->select('image')->where('id',$id)->get('user')->result();
+			$link = "assets/images/profile/users/".$result[0]->image;
+			unlink($link);
+			$name=$_FILES['file']['name'];
+			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+			$path1= $id.'.'.$ext;
+  			$path='assets/images/profile/users/'.$path1;
+	  		if($_FILES['file']['error']==0 && move_uploaded_file($_FILES['file']['tmp_name'], $path)){
+				$data=array(
+					'image'=>$path1
+				);
+				$this->db->where('id',$id);
+				$this->db->update('user', $data);
+				$this->session->set_flashdata('feedback', 'profile picture changed successfully.');
+				redirect('user_welcome');
 			}
-			else{
-				echo $data['error'];
-
-			}
-			
-			$this->session->set_flashdata('feedback', 'profile pic changed');
-			redirect('user_welcome/index');
+			$this->session->set_flashdata('feedback', 'Error Occurred. Please choose different file.');
+			redirect('user_welcome');
 		}
-
-		function delete_image(){
-			$this->user_model->delete_image();
-		}
+	}
 
 }
