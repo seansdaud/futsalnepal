@@ -18,12 +18,6 @@
 			'title' => 'welcome',
 			'content' => 'users/welcome'
 			);
-
-			if($query=$this->user_model->get_image()){
-				$data['records']=$query;
-			}
-
-			$this->load->view('users/includes/template', $data);
 		}
 
 		public function user_logout(){
