@@ -1,1 +1,3 @@
-Welcome to the homepage of admin.
+<div><?php echo $this->session->flashdata('feedback');?></div>
+</br>
+<h1>welcome home</h1>

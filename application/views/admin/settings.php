@@ -1,5 +1,10 @@
 <h1 class="heading">Admin Settings</h1>
-
+	<div><?php echo $this->session->flashdata('feedback');?></div>
+	<?php
+		$admin_name=$this->session->userdata('admin');
+		$result=$this->db->select('id')->where('username',$admin_name)->get('admin')->result();
+		$id=$result[0]->id;
+	?>
 <div class="panel-group" id="accordian">
 
 	<div class="panel panel-default">
@@ -22,6 +27,7 @@
 					</div>
 
 					<div class="submit">
+						<input type="hidden" name="hidden_id" value="<?php echo $id;?>">
 						<button type="submit" class="btn btn-default">Update</button>
 					</div>
 
@@ -50,6 +56,7 @@
 					</div>
 
 					<div class="submit">
+						<input type="hidden" name="hidden_id" value="<?php echo $id;?>">
 						<button type="submit" class="btn btn-default">Update</button>
 					</div>
 
@@ -78,6 +85,7 @@
 					</div>
 
 					<div class="submit">
+						<input type="hidden" name="hidden_id" value="<?php echo $id;?>">
 						<button type="submit" class="btn btn-default">Update</button>
 					</div>
 
@@ -96,7 +104,7 @@
 				<?php echo form_open_multipart("admin/changeProfilePicture", array('data-toggle' => 'validator')); ?>
 					
 					<div>
-						<?php $picture = $this->db->select('image')->get('admin')->result(); ?>
+						<?php $picture = $this->db->select('image')->where('id',$id)->get('admin')->result(); ?>
 						<?php $picture = $picture[0]->image; ?>
 						<?php if(strcmp($picture, '') != 0): ?>
 							<img id="imagePreview1" src='<?php echo base_url('assets/images/profile/admin/'.$picture); ?>' width="180px" height="180px">
@@ -112,6 +120,7 @@
 						<input type="file" class="btn imageFile" id="uploadImage" name="file" accept="image/gif, image/jpeg, image/png" required/>
 					</div>
 					<div class="submit">
+						<input type="hidden" name="hidden_id" value="<?php echo $id;?>">
 						<button type="submit" class="btn btn-default">Update</button>
 					</div>
 

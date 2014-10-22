@@ -12,7 +12,7 @@
 		<div class="col-md-3 sidebar">
 			<div class="welcome">
 				<div class="user-image">
-					<?php $picture = $this->db->select('image')->get('admin')->result(); ?>
+					<?php $picture = $this->db->select('image')->where('username',$this->session->userdata('admin'))->get('admin')->result(); ?>
 					<?php $picture = $picture[0]->image; ?>
 					<?php if(strcmp($picture, '') != 0): ?>
 						<img src="<?php echo base_url('assets/images/profile/admin/'.$picture); ?>" height="80px" width="80px">

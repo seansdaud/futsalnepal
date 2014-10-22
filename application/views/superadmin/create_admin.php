@@ -1,25 +1,37 @@
-<form action="<?php echo site_url().'SuperAdmin/create_admin_post'; ?>" method='post'>
-	
-	<div>
-		Username:<input type="text" name="username" value="<?php echo set_value('username'); ?>" required>
-		<?php echo form_error('username'); ?>
-	</div>
-
-	<div>
-		Password:<input type="password" name="password" required>
-		<?php echo form_error('password'); ?>
-	</div>
-
-	<div>
-		Password Again:<input type="password" name="password-again" required>
-		<?php echo form_error('password-again'); ?>
-	</div>
-
-	<div>
-		Email:<input type="email" name="email" value="<?php echo set_value('email'); ?>" required>
-		<?php echo form_error('email'); ?>
-	</div>
-	
-	<input type="submit" value="Create">
-
-</form>
+<div class="col-md-9">
+	<form action="<?php echo site_url().'SuperAdmin/create_admin_post'; ?>" method='post' data-toggle='validator'>
+		<div class="form-group">
+			<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon log-icon glyphicon-info-sign"></span></div>
+						<input class="form-control" name="username" type="text" placeholder="username" required>
+			</div>
+			<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon log-icon glyphicon-info-sign"></span></div>
+						<input class="form-control" name="password" type="password" placeholder="password" required>
+			</div>
+			<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon log-icon glyphicon-info-sign"></span></div>
+						<input class="form-control" name="password_again" type="password" placeholder="password again.." required>
+			</div>
+			<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+						<div class="input-group-addon"><span class="glyphicon log-icon glyphicon-info-sign"></span></div>
+						<input class="form-control" name="email" type="email" placeholder="email" required>
+			</div>
+			<div class="help-block with-errors"></div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+					<input type="submit" class="btn btn-default" value="Confirm" style="pointer-events: all; cursor: pointer;">
+			</div>
+		</div>
+	</form>
+</div>
