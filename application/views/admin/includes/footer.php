@@ -1,5 +1,6 @@
 				</div>
 			</div>	
+	<div>hello footer</div>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/js.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/bootstrap.min.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/jquery.timepicker.js' ?>"></script>

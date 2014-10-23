@@ -51,8 +51,8 @@
 					</div>
 					
 					<div class="form-group">
-						<input type="password" class="form-control" data-minlength="6" name="new_password" placeholder="New Password" required>
-						<div class="help-block">Minimum 6 characters</div>
+						<input type="password" class="form-control" data-minlength="6" name="new_password" data-error="minimum 6 characters required" placeholder="New Password" required>
+						<div class="help-block"></div>
 					</div>
 
 					<div class="submit">
