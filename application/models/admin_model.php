@@ -13,8 +13,10 @@ class Admin_model extends CI_Model {
 	}
 
 	function change_username(){
-		$this->db->where('password', sha1($this->input->post('password')));
-		if($this->db->get('admin')->num_rows() == 1 ){
+		$id=$this->input->post('hidden_id');
+		$result=$this->db->select('password')->where('id',$id)->get('admin')->result();
+		$match=$result[0]->password;
+		if(strcmp($match,sha1($this->input->post('password')))==0){
 			$data = array(
 				'username' => $this->input->post('new_username')
 			);
@@ -23,7 +25,7 @@ class Admin_model extends CI_Model {
 					'admin'=>$this->input->post('new_username')
 				);
 			$this->session->set_userdata($userdata);
-			$this->db->where('id', $this->input->post('hidden_id'));
+			$this->db->where('id', $id);
 			$update = $this->db->update('admin', $data);
 
 			if($update){
@@ -35,14 +37,15 @@ class Admin_model extends CI_Model {
 	}
 
 	function change_password(){
-		$this->db->where('password', sha1($this->input->post('current_password')));
-		if($this->db->get('admin')->num_rows() == 1){
-
+		$id=$this->input->post('hidden_id');
+		$result=$this->db->select('password')->where('id',$id)->get('admin')->result();
+		$match=$result[0]->password;
+		if(strcmp($match, sha1($this->input->post('current_password')))==0){
 			$data = array(
 				'password' => sha1($this->input->post('new_password'))
 			);
 
-			$this->db->where('id', $this->input->post('hidden_id'));
+			$this->db->where('id', $id);
 			if($this->db->update('admin', $data)){
 				return true;
 			}
@@ -52,12 +55,13 @@ class Admin_model extends CI_Model {
 	}
 
 	function change_email(){
-		$this->db->where('password', sha1($this->input->post('password')));
-		if($this->db->get('admin')->num_rows() == 1){
-
+		$id=$this->input->post('hidden_id');
+		$result=$this->db->select('password')->where('id',$id)->get('admin')->result();
+		$match=$result[0]->password;
+		if(strcmp($match, sha1($this->input->post('password')))==0){
 			$data['email'] = $this->input->post('new_email');
 
-			$this->db->where('id', $this->input->post('hidden_id'));
+			$this->db->where('id', $id);
 			if($this->db->update('admin', $data)){
 				return true;
 			}
