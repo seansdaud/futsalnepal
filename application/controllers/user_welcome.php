@@ -16,9 +16,18 @@
 		public function index(){
 			$data = array(
 			'title' => 'welcome',
-			'content' => 'users/welcome'
+			'content' => 'users/home'
 			);
-			
+			$data['admin']=$this->work_model->get_admin();
+			$data['schedular']=$this->db->get('scheduler')->result();
+			$this->load->view('users/includes/template', $data);
+		}
+
+		public function profile(){
+			$data=array(
+					'title'=>'profile',
+					'content'=>'users/profile'
+				);
 			$this->load->view('users/includes/template', $data);
 		}
 
@@ -36,20 +45,20 @@
 			$confirm = $this->user_model->change_password();
 			if($confirm === true){
 				$this->session->set_flashdata('feedback', 'Password changed successfully.');
-				redirect('user_welcome');
+				redirect('user_welcome/profile');
 			}
 			else if($confirm === false){
 				$this->session->set_flashdata('feedback', 'error occured. Please try again.');
-				redirect('user_welcome');
+				redirect('user_welcome/user_setting');
 			}
 			else if($cofirm==0){
 				$this->session->set_flashdata('feedback', 'Invalid current password.');
-				redirect('user_welcome');
+				redirect('user_welcome/user_setting');
 			}
 		}
 		else{
-			$this->session->set_flashdata('feedback', 'Minimum character for password is 6.');
-			redirect('user_welcome');
+			$this->session->set_flashdata('feedback', 'Provide valid details.');
+			redirect('user_welcome/user_setting');
 		}
 	}
 
@@ -79,10 +88,64 @@
 				$this->db->where('id',$id);
 				$this->db->update('user', $data);
 				$this->session->set_flashdata('feedback', 'profile picture changed successfully.');
-				redirect('user_welcome');
+				redirect('user_welcome/profile');
 			}
 			$this->session->set_flashdata('feedback', 'Error Occurred. Please choose different file.');
-			redirect('user_welcome');
+			redirect('user_welcome/profile');
+		}
+	}
+
+	function change_username(){
+		$username=$this->input->post('new_username');
+		$row=$this->db->where('username',$username)->get('user')->num_rows();
+		if($row==1){
+			$this->session->set_flashdata('feedback', 'Username already taken. choose a different one!');
+			redirect('user_welcome/user_setting');
+		}
+
+		else{
+			$this->load->model('user_model');
+			$confirm = $this->user_model->change_username();
+			if($confirm === true){
+				$this->session->set_flashdata('feedback', 'username changed.');
+				redirect('user_welcome/profile');
+			}
+			else if($confirm === false){
+				$this->session->set_flashdata('feedback', 'Error occured. Please try again.');
+				redirect('user_welcome/user_setting');
+			}
+			else if($confirm==0){
+				$this->session->set_flashdata('feedback', 'Invalid password.');
+				redirect('user_welcome/user_setting');
+			}
+		}
+	}
+
+	function change_email() {
+		$this->form_validation->set_message('valid_email', 'Email not valid.');
+		$this->form_validation->set_rules('new_email', 'New Email', 'trim|xss_clean|valid_email');
+
+		if($this->form_validation->run() == true){
+			$confirm = $this->user_model->change_email();
+			if($confirm === true){
+				$this->session->set_flashdata('feedback', 'Email changed successfully.');
+				redirect('user_welcome/profile');
+			}
+			else if($confirm === false){
+				$this->session->set_flashdata('feedback', 'Error occured. Please try again.');
+				$this->session->set_flashdata('new_email', $this->input->post('new_email'));
+				redirect('user_welcome/user_setting');
+			}
+			else if($confirm==0){
+				$this->session->set_flashdata('feedback', 'current password not matched.');
+				$this->session->set_flashdata('new_email', $this->input->post('new_email'));
+				redirect('user_welcome/user_setting');
+			}
+		}
+		else{
+			$this->session->set_flashdata('feedback', 'Please provide valid details.');
+			$this->session->set_flashdata('new_email', $this->input->post('new_email'));
+			redirect('user_welcome/user_setting');
 		}
 	}
 

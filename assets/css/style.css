@@ -47,3 +47,60 @@
 	color: #001;
 	text-align: center;
 }
+
+.logout li{
+	list-style: none;
+	float: left;
+}
+
+.user-logout {
+	float: right;
+}
+.home-arena{
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size:33px;
+}
+.search-arena{
+	margin-left: 40px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	width: 520px !important;
+}
+.fields-arena{
+	margin-left:20px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size:33px;
+}
+.submit-arena{
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.user-profile{
+	margin-left:20px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size:33px;
+}
+
+.user-logoff{
+	margin-top:10px;
+	margin-left:40px;
+	margin-bottom: 5px;
+	font-size:33px;
+}
+.sidebar-right{
+	margin-top:10px;
+	margin-bottom: 5px;
+	margin-right: 50px;
+	font-size:22px;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+	background-color: transparent !important;
+}
+.cog{
+	margin-right:22px;
+	font-size:22px;
+}
