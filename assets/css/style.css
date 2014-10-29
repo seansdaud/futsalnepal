@@ -11,3 +11,39 @@
 	padding: 6px;
 	margin-top:9px;
 }
+.changeImage {
+	display: block;
+	width: 180px;
+	height: 40px;
+	background-color: #e6e6e6;
+	border-color: #adadad;
+	border-radius: 0px !important;
+	color: #000;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 17px;
+}
+.imageFile{
+	display: block;
+	opacity: 0;
+	width: 283px;
+	height: 40px;
+	margin-top: -40px;
+	margin-left: -103px;
+}
+.choose{
+	overflow: hidden;
+}
+#imagePreview {
+    width: 180px;
+    height: 180px;
+    background-position: center center;
+    background-size: cover;
+    display: inline-block;
+    z-index: 10;
+}
+.register {
+	font-size: 25px;
+	color: #001;
+	text-align: center;
+}

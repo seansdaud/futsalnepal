@@ -1,4 +1,4 @@
-<?php
+ <?php
  class User_model extends CI_Model{
 	 	function signup($data){
 			$this->db->insert('user',$data);
@@ -39,40 +39,28 @@
 	 		}
 	 	}
 
-
-		function do_upload($data){
-			$this->db->insert('profile_image',array('image_name' => $data['image_name'],
-													'username'	=>$this->session->userdata('username')
-												));
-			return 1;
-		}
-
 		function get_image(){
 			$this->db->where('username',$this->session->userdata('username'));
 		    $result=$this->db->get('profile_image')->result();
 		    return $result;
 		}
 
-		function change_psw(){
-			$this->db->where('password', sha1($this->input->post('current_password')));
-			if($this->db->get('user')->num_rows() == 1){
-				$data=array(
-						'password' =>sha1($this->input->post('new_password'))
+		function change_password(){
+				$user_id=$this->input->post('hidden_id');
+				$result=$this->db->where('id',$user_id)->get('user')->result();
+				$pass=$result[0]->password;
+				if(strcmp($pass,sha1($this->input->post('current_password')))==0){
+						$data = array(
+						'password' => sha1($this->input->post('new_password'))
 					);
-				$this->db->where('username',$this->session->userdata('username'));
-				if($this->db->update('user',$data)){
-					return 1;
+					$this->db->where('id', $user_id);
+					if($this->db->update('user', $data)){
+						return true;
+					}
+					return false;
 				}
-				else{
-					return 2;
-				}
-				
-			}
-
-			else{
 				return 0;
 			}
-		}
 
 		function delete_image(){
 			$this->db->select('image_name');

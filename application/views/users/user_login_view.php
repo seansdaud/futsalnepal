@@ -1,7 +1,7 @@
 <div class="col-md-12">
 	<div class="form-group login">
 		<p><?php echo $this->session->flashdata('feedback');?></p>
-		<h1>SignIn</h1>
+		<div class="register">log in</div>
 		<?php
 		$attributes=array('class'=>'user_signin', 'data-toggle'=>'validator');
 		echo form_open('futsalnepal/user_login',$attributes) ?>
