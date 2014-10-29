@@ -72,4 +72,44 @@
 		 	$this->db->delete('profile_image');
 		 	redirect('user_welcome');
 		}
+
+		function change_username(){
+		$id=$this->input->post('hidden_id');
+		$result=$this->db->select('password')->where('id',$id)->get('user')->result();
+		$match=$result[0]->password;
+		if(strcmp($match,sha1($this->input->post('password')))==0){
+			$data = array(
+				'username' => $this->input->post('new_username')
+			);
+			$this->session->unset_userdata('username');
+			$userdata=array(
+					'username'=>$this->input->post('new_username')
+				);
+			$this->session->set_userdata($userdata);
+			$this->db->where('id', $id);
+			$update = $this->db->update('user', $data);
+
+			if($update){
+				return true;
+			}
+			return false;
+		}
+		return 0;
+	}
+
+	function change_email(){
+		$id=$this->input->post('hidden_id');
+		$result=$this->db->select('password')->where('id',$id)->get('user')->result();
+		$match=$result[0]->password;
+		if(strcmp($match, sha1($this->input->post('password')))==0){
+			$data['email'] = $this->input->post('new_email');
+
+			$this->db->where('id', $id);
+			if($this->db->update('user', $data)){
+				return true;
+			}
+			return false;
+		}
+		return 0;
+	}
 }
