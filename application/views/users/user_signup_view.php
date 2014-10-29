@@ -1,6 +1,6 @@
 <div class="col-md-12">
 		<div class="form-group login">	
-					<p><?php echo $this->session->flashdata('feedback_signup');?></p>
+					<div><?php echo $this->session->flashdata('feedback_signup');?></div>
 					<div class="register">create account</div>
 					<?php 
 					$attributes = array('class' => 'user_signup', 'data-toggle' => 'validator');
@@ -41,7 +41,7 @@
 					<div class="form-group field">
 						<div class="input-group">
 							<div class="input-group-addon"><span class="glyphicon log-icon glyphicon-earphone"></span></div>
-							<input class="form-control" name="contactno" type="text" data-minlength="10" maxlength="10" data-error="enter 10 digit number" placeholder="Contact number.." required>
+							<input class="form-control" name="contactno" data-minlength="10" maxlength="10" data-error="enter 10 digit number" type="tel"  placeholder="Contact number.." required>
 						</div>
 						<div class="help-block with-errors"></div>
 					</div>

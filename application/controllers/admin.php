@@ -51,10 +51,15 @@ class Admin extends CI_Controller {
 	}
 
 	function change_username(){
-		$this->form_validation->set_rules('new_username', 'New Username', 'trim|xss_clean|is_unique[admin.username]');
-		$this->form_validation->set_rules('password', 'Password', 'xss_clean');
+		$username=$this->input->post('new_username');
+		$row=$this->db->where('username',$username)->get('admin')->num_rows();
+		if($row==1){
+			$this->session->set_flashdata('feedback', 'Username already taken. choose a different one!');
+			redirect('admin/settings');
+		}
 
-		if($this->form_validation->run() == true){
+		else{
+			$this->load->model('admin_model');
 			$confirm = $this->admin_model->change_username();
 			if($confirm === true){
 				$this->session->set_flashdata('feedback', 'username changed.');
@@ -69,15 +74,11 @@ class Admin extends CI_Controller {
 				redirect('admin/settings');
 			}
 		}
-		else{
-			$this->session->set_flashdata('feedback', 'Provide valid details.');
-			redirect('admin/settings');
-		}
 	}
 
 	function change_password(){
 		$this->form_validation->set_rules('current_password', 'Current Password', 'xss_clean');
-		$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean | min_lenght[6]');
+		$this->form_validation->set_rules('new_password', 'New Password', 'xss_clean');
 
 		if($this->form_validation->run() == true){
 			$confirm = $this->admin_model->change_password();
@@ -95,7 +96,7 @@ class Admin extends CI_Controller {
 			}
 		}
 		else{
-			$this->session->set_flashdata('feedback', 'Minimum character for password is 6.');
+			$this->session->set_flashdata('feedback', 'Something went wrong. Please try again');
 			redirect('admin/settings');
 		}
 	}
@@ -115,7 +116,7 @@ class Admin extends CI_Controller {
 				redirect('admin/settings');
 			}
 			else if($confirm==0){
-				$this->session->set_flashdata('feedback', 'password not matched.');
+				$this->session->set_flashdata('feedback', 'current password not matched.');
 				redirect('admin/settings');
 			}
 		}
