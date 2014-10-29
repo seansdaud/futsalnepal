@@ -11,10 +11,10 @@
 	<script type="text/javascript">
 	 $("#home .sidebar-navigation a:contains('Home')").addClass('active');
    $("#scheduler .sidebar-navigation a:contains('Schedular')").addClass('active');
-   $("#book .sidebar-navigation a:contains('Book Schedule')").addClass('active');
-   $("#book .sidebar-navigation #book").addClass('in');
+   $("#books .sidebar-navigation a:contains('Book Schedule')").addClass('active');
+   $("#books .sidebar-navigation #book").addClass('in');
     $("#showschedular .sidebar-navigation a:contains('Update Schedule')").addClass('active');
-     $("#todayschedular .sidebar-navigation a:contains('Today's Schedule')").addClass('active');
+     $("#todayschedular .sidebar-navigation a:contains('Today's Booking')").addClass('active');
 		$("#imagePreview  ").hide();
 
 		$(function() {

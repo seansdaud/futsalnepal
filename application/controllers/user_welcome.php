@@ -18,6 +18,7 @@
 			'title' => 'welcome',
 			'content' => 'users/home'
 			);
+
 			$data['admin']=$this->work_model->get_admin();
 			$data['schedular']=$this->db->get('scheduler')->result();
 			$this->load->view('users/includes/template', $data);
@@ -29,6 +30,7 @@
 					'content'=>'users/profile'
 				);
 			$this->load->view('users/includes/template', $data);
+
 		}
 
 		public function user_logout(){
