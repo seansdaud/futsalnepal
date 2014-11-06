@@ -1,125 +1,27 @@
-
+<?php if(!empty( $getdate)):?>
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
-		$name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
-		echo "Booking for ".$name[0]->name."<br/>";
-		// echo date('w') +1; 
-		// $day=date('w') +1; 
-		// echo "<input type='hidden' id='today' value='".$day."' >";
-		// echo "</br>";
-		// $date=date("Y-m-d"); 
-		// echo "<div class='today'>Date:</div>".$date."</br>";
-		// echo " <input type='hidden' id='date' value='".$date."' >";
-		// echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
-
-		date_default_timezone_set("Asia/Katmandu"); 
-
-		echo date('w') +1; 
-		$day=date('w') +1; 
+		$pizza  = $getdate;
+		$pieces = explode(",", $pizza);
+		// echo $pieces[0]; // piece1
+		$date= $pieces[1]; // piece2
+		$dowMap = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+		for ($i=0; $i <7 ; $i++) { 
+			if($pieces[0]==$dowMap[$i]){
+				$day=$i+1;
+			}
+		}
+		print_r($day);
+		print_r($date);
 		echo "<input type='hidden' id='today' value='".$day."' >";
-		echo "</br>";
-		$date=date("Y-m-d"); 
+		// echo "</br>";$date=date($getdate); 
 		echo "<div class='today'>Date:</div>".$date."</br>";
 		echo " <input type='hidden' id='date' value='".$date."' >";
 		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
- 
  	?>
  </div>
-
-<input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
-
-<!-- <div id="time"></div>
-<div class="panel-body">
-	<table id='mytable' name='futsal-table'  class='table ' border=1 width=100% >
-		<tbody id='my'>
-													<tr>
-															<td name='time'><span class="day">Time </span></td>
-															<td name='sunday'><span class="day">Sunday</span><div class="din1"></div></td>
-															<td name='monday'><span class="day">Monday</span><div class="din2"></div></td>
-															<td name='tuesday'><span class="day">Tuesday</span><div class="din3"></div></td>
-															<td name='wednesday'><span class="day">Wednesday</span><div class="din4"></div></td>
-															<td name='thrusday'><span class="day">Thrusday</span><div class="din5"></div></td>
-															<td name='friday'><span class="day">Friday</span><div class="din6"></div></td>
-															<td name='saturday'><span class="day">Saturday</span><div class="din7"></div></td>
-													</tr>
-													
-														<?php $time=$schedular[0]->time_diff; ?>
-														<input type='hidden' name='diff' value='<?php echo $time; ?>'>
-													
-													<?php $i=0; ?>
-													<?php $j=0; ?>
-													<?php $k=0; ?>
-													<?php $c=0; ?>
-														<?php foreach ($schedular as $key ): ?>
-														<?php $i++;?>
-														<?php $k++;?>
-														<?php $c++;?>
-														<?php if($i==1) : ?>
-															<tr>
-															<td name='time'><?php echo $key->start_time; ?>--<?php echo $key->end_time; ?></td>
-															<td class='rows<?php echo $k;?>'>
-												
-																<?php echo $key->price; ?>
-															
-																<?php if($key->book_status>0): ?>
-																<div><input  type="button"  class="btn btn-primary"  value="Booked" ></div>
-															
-															<?php else: ?>
-																<?php echo form_open("admin/book"); ?>
-																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
-																<div class='date_send<?php echo $k;?>'></div>
-																<input  type="submit"  class="btn btn-danger"  value="Book" >
-																<?php echo form_close(); ?>
-										
-															<?php endif; ?>
-															</td>
-														<?php elseif ($i==7): $k=0;?>
-															<td class='rows<?php echo $k;?>'>
-															
-																<?php echo $key->price; ?>
-															<?php if($key->book_status>0): ?>
-																<div><input  type="button"  class="btn btn-primary"  value="Booked" ></div>
-															<?php else: ?>
-															<?php echo form_open("admin/book"); ?>
-																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
-																<div class='date_send<?php echo $k;?>'></div>
-																<input  type="submit"  class="btn btn-danger"  value="Book" >
-																<?php echo form_close(); ?>
-															<?php endif; ?>
-															</td>
-															</tr>
-															<?php $i=0; ?>
-															<?php $j++;?>
-														<?php elseif ($i<8) : ?>
-															<td class='rows<?php echo $k;?>'>
-															
-																<?php echo $key->price; ?>
-															<?php if($key->book_status>0): ?>
-																<div><input  type="button"  class="btn btn-primary"  value="Booked" ></div>
-																
-															<?php else: ?>
-															<?php echo form_open("admin/book");  ?>
-																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
-																<div class='date_send<?php echo $k;?>'></div>
-																<input  type="submit"  class="btn btn-danger"  value="Book" >
-																<?php echo form_close(); ?>
-															<?php endif; ?>
-															</td>
-															
-													<?php endif; ?>
-														<?php endforeach; ?>
-														
-
-		</tbody>
-		</table>
-
-</div> -->
-
- <?php echo form_open("admin/book_for_all"); ?>
+ <?php echo form_open("admin/detail_schedular_post"); ?>
 		<div class="form-group ">
 			<label for="username">Choose Date:</label>
 		</div>
@@ -128,10 +30,9 @@
 			</br>
 			<input type ="submit" value="View Detail" class="btn btn-primary">
 			</br>
-	</div>
+		</div>
 <?php echo form_close(); ?>
- <!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
+ <ul class="nav nav-tabs" role="tablist">
   <li class="1"><a href="#1 " role="tab" data-toggle="tab">Sunday</a></li>
   <li class="2"><a href="#2" role="tab" data-toggle="tab">Monday</a></li>
   <li class="3"><a href="#3 " role="tab" data-toggle="tab">Tuesday</a></li>
@@ -223,12 +124,7 @@ for ($m=$day; $m <= $loop ; $m++): $i++;?>
 																</div>
 															<?php else: ?>
 																<div>
-																<?php echo form_open("admin/book"); ?>
-																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
-																<input type='hidden' name='date' value='<?php echo $datePlusFive; ?>'>
-																<input  type="submit"  class="btn btn-success"  value="Book" >
-																<?php echo form_close(); ?>
+																	<div><input  type="button"  class="btn btn-danger"  value=" Not Booked" ></div>
 																</div>
 															<?php endif; ?>
 															</td>
@@ -313,7 +209,7 @@ for ($m=$day; $m <= $loop ; $m++): $i++;?>
 															<?php endif; ?>
 															</td>
 															<td>
-																<?php if($key->book_status>0 && !empty($bookin)):
+																<?php if($key->book_status>0 && !empty($bookin)): 
 																
 																	$user= $this->db->where('id', $bookin[0]->user_id)->get('user')->result();
 																?>
@@ -323,12 +219,7 @@ for ($m=$day; $m <= $loop ; $m++): $i++;?>
 
 																</div>
 															<?php else: ?>
-																<?php echo form_open("admin/book"); ?>
-																<input type="hidden" name="key_id" value="<?php echo $key->id; ?>">
-																<input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
-																<input type='hidden' name='date' value='<?php echo $datePlusFive; ?>'>
-																<input  type="submit"  class="btn btn-success"  value="Book" >
-																<?php echo form_close(); ?>
+																<div><input  type="button"  class="btn btn-danger"  value=" Not Booked" ></div>
 															<?php endif; ?>
 															</td>
 															<td>
@@ -337,7 +228,7 @@ for ($m=$day; $m <= $loop ; $m++): $i++;?>
 																</div>
 															</td>
 															<td>
-															<?php if($key->book_status>0 && !empty($bookin)): 
+															<?php if($key->book_status>0 && !empty($bookin)):
 																	$user= $this->db->where('id', $bookin[0]->user_id)->get('user')->result();
 																?>
 															
@@ -360,7 +251,8 @@ for ($m=$day; $m <= $loop ; $m++): $i++;?>
   
 
 </div>
+<?php else: ?>
 
-<div id="message" ></div>
+<div class="alert alert-danger">Please select a <a href="<?php echo base_url("admin/detail_schedular"); ?>">date</a> to See Schedule </div>
 
-<!-- </div> -->
+<?php endif; ?>

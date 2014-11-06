@@ -59,13 +59,13 @@ function newstart(first){
 														    $.each(array, function(val) {
 														        $container.append($("<tr/>").append(
 														        	 $("<td/>").html("<span>"+start_time1+"--"+newstart(start_time1)+"</span>"),
-														        	  $("<td/>").html("<span><input class='form-control' type='text' name='1"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control' type='text' name='2"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control' type='text' name='3"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control' type='text' name='4"+val+"'></span>"),
-														        	   $("<td/>").html("<span><input class='form-control' type='text' name='5"+val+"'></span>"),
-														        	    $("<td/>").html("<span><input class='form-control' type='text' name='6"+val+"'></span>"),
-														        	     $("<td/>").html("<span><input class='form-control' type='text' name='7"+val+"'></span>")
+														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='1"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='2"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='3"+val+"'></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='4"+val+"'></span>"),
+														        	   $("<td/>").html("<span><input class='form-control copy' type='text' name='5"+val+"'></span>"),
+														        	    $("<td/>").html("<span><input class='form-control copy' type='text' name='6"+val+"'></span>"),
+														        	     $("<td/>").html("<span><input class='form-control copy' type='text' name='7"+val+"'></span>")
 														        	
 														        ));
 														      
@@ -82,7 +82,15 @@ $("#submit").html("<input type='submit' class='btn btn-primary ' value='update'>
 
 
 });
-
+$(".copy").keyup(function(){
+	alert("ASd");
+		// var copy = $(this).val();	
+		// $(this).val(copy);	
+});
+$( ".copy" ).on( "click", function(){
+  alert( "This will be displayed only once." );
+  $( this ).off( event );
+});
 // // $("#submit").html("<input type='button' onclick='submit_ajax()' value='update'>");
 //  function get_ajax(){
 //  	var base_url= $('#base_url').val();
@@ -197,7 +205,7 @@ function update_ajax(){
           	}, 2000);
      		  },
      		   beforeSend : function (){
-                 $('#id').html("<div class='loading'><img src='"+base_url+"/images/ajax_load.gif'></div>");
+                 $('#id').html("<div class='loading'><img src='"+base_url+"assets/images/ajax_load.gif'></div>");
 
             },
           	    error: function(jqXHR, textStatus, errorThrown){ 
@@ -270,7 +278,7 @@ $("#searchmem").keyup(function(){
 
      		  },
      		   beforeSend : function (){
-                 $('.id').html("<div class='loading'><img src='"+url+"/images/ajax_load.gif'></div>");
+                 $('.id').html("<div class='loading-ser'><img src='"+url+"assets/images/ajax_load.gif'></div>");
 
             },
 				 error: function(jqXHR, textStatus, errorThrown){ 
@@ -292,43 +300,44 @@ function item(m){
 	$("#searchmem").val(value);
 	$('#btn_book').prop('disabled',false);
 }
-$(document).ready(function() {
+// $(document).ready(function() {
 
-var today = $("#today").val();
- var now=parseInt(today) ;
-var date = $("#date").val();
-var c=now;
-var s=0;;
-for (var i = 0; i <= 6; i++) {
-	var data=increasedate(date,i);
-	$(".din"+c+"").html(data);
-	$(".date_send"+c+"").html("<input type='hidden' name='date' value='"+data+"'>");
-	$(".date_get"+c+"").html("Date: "+data);
-	c=c+1;
-	if (s==1) {
-		b=c-1;
-		$(".rows"+b+"").addClass("warning");
-	};
-	if(c==8){
-		c=1;
-		s=1;
-	}
+// var today = $("#today").val();
+//  var now=parseInt(today) ;
+// var date = $("#date").val();
+// var c=now;
+// var s=0;
+// for (var i = 0; i <= 6; i++) {
+// 	var data=increasedate(date,i);
+// 	$(".din"+c+"").html(data);
+// 	$(".date_send"+c+"").html("<input type='hidden' name='date' value='"+data+"'>");
+// 	$(".date_get"+c+"").html("Date: "+data);
+// 	$("#date_now"+c+"").val(data);
+// 	c=c+1;
+// 	if (s==1) {
+// 		b=c-1;
+// 		$(".rows"+b+"").addClass("warning");
+// 	};
+// 	if(c==8){
+// 		c=1;
+// 		s=1;
+// 	}
 	
-};
+// };
 
-});
-function increasedate(date,time){
+// });
+// function increasedate(date,time){
 
-date1= new Date(date);
-next_date = new Date(date1.setDate(date1.getDate() + time));
-formatted = next_date.getUTCFullYear() + '-' + padNumber(next_date.getUTCMonth() + 1) + '-' + padNumber(next_date.getUTCDate())
-       function padNumber(number) {
-                var string  = '' + number;
-                string      = string.length < 2 ? '0' + string : string;
-                return string;
-            } 
-return formatted;
-}
+// date1= new Date(date);
+// next_date = new Date(date1.setDate(date1.getDate() + time));
+// formatted = next_date.getUTCFullYear() + '-' + padNumber(next_date.getUTCMonth() + 1) + '-' + padNumber(next_date.getUTCDate())
+//        function padNumber(number) {
+//                 var string  = '' + number;
+//                 string      = string.length < 2 ? '0' + string : string;
+//                 return string;
+//             } 
+// return formatted;
+// }
 
 $(document).ready(function() {
 

@@ -8,10 +8,17 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/style.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/jquery.timepicker.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/admin.css'); ?>">
-
+	  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-ui-1.10.4.css'); ?>">
 		<style type="text/css">
 
 	.loading img{
+			position: fixed;
+			margin: -159px 240px;
+			z-index: 999;
+			height: 466px;
+		
+		}
+		.loading-ser img{
 			position: fixed;
 			margin: -75px 240px;
 			z-index: 999;

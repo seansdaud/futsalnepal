@@ -15,7 +15,16 @@ class Admin extends CI_Controller {
 	}
 
 	function index(){
+		date_default_timezone_set("Asia/Katmandu"); 
+		$date=date("Y-m-d"); 
+		$this->db->where('booking_date <', $date);
+		$book=$this->db->get('booking')->result();
+		foreach ($book as $key ) {
 
+			$dat=array('book_status'=>'0');
+			$this->db->where('book_status',$key->id);
+			$this->db->update('scheduler',$dat);
+		}
 		$data = array(
 			'title' => 'Admin Home',
 			'content' => 'admin/home',
@@ -151,12 +160,12 @@ class Admin extends CI_Controller {
 		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
 		$adminid=$admin[0]->id;
 		$new=$this->db->where('admin_id',$adminid)->get('scheduler')->result();
-		foreach ($new as $key) {
+		// foreach ($new as $key) {
 
-			if($this->db->where("schedule_id",$key->id)){
-			$this->db->delete('booking');
-			}
-		}
+		// 	if($this->db->where("schedule_id",$key->id)){
+		// 	$this->db->delete('booking');
+		// 	}
+		// }
 		$this->work_model->delete_schedule($adminid);
 		$diff=$this->input->post('diff');
 		$j=-1;
@@ -248,7 +257,7 @@ class Admin extends CI_Controller {
 				$data = array(
 			'title' => 'Book schedular',
 			'content' => 'admin/choose_player',
-			'id'=>'book'
+			'id'=>'books'
 		);
 
 		}
@@ -256,7 +265,7 @@ class Admin extends CI_Controller {
 				$data = array(
 			'title' => 'Book schedular',
 			'content' => 'admin/type_player',
-			'id'=>'book'
+			'id'=>'books'
 		);
 		}
 	
@@ -279,26 +288,51 @@ class Admin extends CI_Controller {
 			$data = array(
 				'title' => 'Book schedular',
 				'content' => 'admin/bookschedular',
-				'id'=>'book'
+				'id'=>'books'
 			);
 			$data['schedular']= $this->db->get('scheduler')->result();
 			$this->load->view('admin/includes/template', array_merge($data,$data1));
 		
 	}
+	function book_for_all(){
+		$data = array(
+				'title' => 'Book schedular',
+				'content' => 'admin/book_for_all',
+				'id'=>'books',
+				'getdate'=>$this->input->post('getdate')
+			);
+			$data['schedular']= $this->db->get('scheduler')->result();
+			$this->load->view('admin/includes/template', array_merge($data));
+	}
 	function book(){
-			date_default_timezone_set("Asia/Katmandu"); 
 			$date = $this->db->where('id', $this->uri->segment(3))->get('scheduler')->result();
 			// print_r($date[0]->day);
 			$data = array(
 					'schedule_id'=>$this->input->post('key_id'),
 					'user_id'=>$this->input->post('user_id'),
 					'booking_date'=>$this->input->post('date'),
+
 					);
-			$booking_id=$this->work_model->booking($data);
-			$data1=array('book_status'=>$booking_id);
-			$this->db->where('id',$this->input->post('key_id'));
-			$this->db->update('scheduler',$data1);
-			redirect("admin/pre_book_schedule");
+			$datename= $this->db->where('id',$this->input->post('key_id'))->get('scheduler')->result();
+			if($datename[0]->book_status==0){
+				$booking_id=$this->work_model->booking($data);
+				$data1=array('book_status'=>$booking_id);
+				$this->db->where('id',$this->input->post('key_id'));
+				$this->db->update('scheduler',$data1);
+				$data1=array('status'=>$booking_id);
+				$this->db->where('id',$booking_id);
+				$this->db->update('booking',$data1);
+				redirect("admin/pre_book_schedule");
+			}
+			else{
+				$booking_id=$this->work_model->booking($data);
+				$statusname= $this->db->where('id',$this->input->post('key_id'))->get('scheduler')->result();
+				$data2=array('status'=>$statusname[0]->book_status);
+				$this->db->where('id',$booking_id);
+				$this->db->update('booking',$data2);
+				redirect("admin/pre_book_schedule");
+			}
+			
 	}
 	function searchuser(){
 			$search_content=$this->input->post('mem');
@@ -344,7 +378,7 @@ class Admin extends CI_Controller {
 		$data = array(
 				'title' => 'Detail schedule',
 				'content' => 'admin/schedule_today',
-				'id'=>'book'
+				'id'=>'todayschedular'
 			);
 		$this->load->view('admin/includes/template',$data);
 	}
@@ -371,10 +405,22 @@ class Admin extends CI_Controller {
 			$data = array(
 				'title' => 'Book schedular',
 				'content' => 'admin/bookschedular',
-				'id'=>'book'
+				'id'=>'books'
 			);
 			$data['schedular']= $this->db->get('scheduler')->result();
 			$this->load->view('admin/includes/template', array_merge($data,$data1));
 	}
+	function detail_schedular_post(){
 
+		$admin = $this->db->where('username', $this->session->userdata('admin'))->get('admin')->result();
+		$adminid= $admin[0]->id;
+		$data['schedular']=$this->db->where('admin_id', $adminid)->get('scheduler')->result();
+		$data = array(
+				'title' => 'Detail schedule',
+				'content' => 'admin/show_now',
+				'id'=>'todayschedular',
+				'getdate'=>$this->input->post('getdate')
+			);
+		$this->load->view('admin/includes/template',$data);
+	}
 }
