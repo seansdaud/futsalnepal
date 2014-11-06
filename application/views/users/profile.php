@@ -37,6 +37,13 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<div><?php echo $result[0]->email; ?></div>
+		<?php 
+			$result=$this->db->select('schedule_id')->where('user_id',$id)->get('booking')->result();
+		 ?>
+		<div><?php foreach ($result as $sid): {
+					$sid=$sid->schedule_id;
+				} ?>
+			<?php endforeach; ?>
+		</div>
 	</div>
 </div>
