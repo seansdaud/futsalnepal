@@ -423,4 +423,122 @@ class Admin extends CI_Controller {
 			);
 		$this->load->view('admin/includes/template',$data);
 	}
+	function news(){
+		$data = array(
+				'title' => 'News',
+				'content' => 'admin/news',
+				'id'=>'todayschedular',
+			);
+		$this->load->library('pagination');
+		$this->load->library('table');
+		$base_url = site_url().'admin/news';
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $this->db->get('news')->num_rows();
+		$config['per_page'] = 9;
+		$config['num_links'] = 5;
+		$data['news']=$this->db->where('admin',$this->session->userdata('admin'))->order_by('id', 'desc')->get('news', $config['per_page'], $this->uri->segment(3))->result();
+		$this->pagination->initialize($config);
+		$this->load->view('admin/includes/template',$data);
+	}
+	function create_news(){
+		$data=array(
+				'title'=>'create news',
+				'content'=>'admin/create_news',
+				'id'=>'create_news'
+			);
+		$this->load->view('admin/includes/template',$data);
+	}
+	function news_post(){
+		$this->form_validation->set_rules('title', 'Title', 'is_unique[news.title]');
+		$this->form_validation->set_rules('content', 'Content', 'trim|required');
+		if($this->form_validation->run() == false){
+			$this->create_news();
+		}
+		else{
+  			$name=$_FILES['image']['name'];
+  			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+  			$path1= uniqid().'.'.$ext;
+	  		$path='assets/images/news/'.$path1;
+
+	  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+  				$data = array(
+					'title' => $this->input->post('title'),
+					'content' => $this->input->post('content'),
+					'image'=>$path1,
+					'admin'=>$this->session->userdata('admin'),
+					'date' => date('Y-m-d H:i:s'),
+					'day' => date('d'),
+					'month' => date('M')
+				);
+			}
+			if($this->admin_model->news($data)){
+				redirect('admin/news');
+			}
+			else{
+				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+			}
+
+		}
+	}
+	function news_edit(){
+		$data = array(
+			'title' => 'Edit News',
+			'content' => 'admin/edit_news',
+			'id' => 'news'
+		);
+
+		$data['records']=$this->db->get_where('news',array('id'=>$this->uri->segment(3),'admin'=>$this->session->userdata('admin')))->result();
+
+		$this->load->view('admin/includes/template', $data);
+	}
+
+	function news_edit_post(){
+			$name = $_FILES['image']['name'];
+
+			if(isset($name) && !empty($name)){
+				$results=$this->db->get_where('news',array('id'=>$this->input->post('id'),'admin'=>$this->session->userdata('admin')))->result();
+				if(!empty($results)){
+		  			$path1=$results[0]->image;
+			  		$path='assets/images/news/'.$path1;
+			  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+			  			$data = array(
+							'title' => $this->input->post('title'),
+							'content' => $this->input->post('content'),
+							'image' => $path1
+						);
+			  		}
+				}
+			else{
+				$data = array(
+					'title' => $this->input->post('title'),
+					'content' => $this->input->post('content')
+				);
+			}
+
+			$this->db->where('id', $this->input->post('id'));
+			$this->db->where('admin', $this->session->userdata('admin'));
+			if($this->db->update('news', $data)){
+				$this->session->set_flashdata('msg', 'News Updated.');
+				redirect('admin/news');
+			}
+			else{
+				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+				redirect("admin/news_edit/".$this->input->post('id'));
+			}
+		}
+	}
+	function news_delete(){
+		$results=$this->db->get_where('news',array('id'=>$this->uri->segment(3)))->result();
+		$path='./assets/images/news/'.$results[0]->image;
+		unlink($path);
+		$this->db->where('id', $this->uri->segment(3));
+		if($this->db->delete('news')){
+			$this->session->set_flashdata('msg', 'Deleted Successfully');
+			redirect('admin/news');
+		}
+		else{
+			$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+			redirect('admin/news');
+		}
+	}
 }

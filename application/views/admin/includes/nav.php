@@ -27,6 +27,7 @@
 			<nav>
 				<ul class="sidebar-navigation">
 					<li><a href="<?php echo base_url('admin'); ?>"><span class="glyphicon glyphicon-home fav-icon"></span>Home</a></li>
+					<li><a href="<?php echo base_url('admin/news'); ?>"><span class="glyphicon glyphicon-list-alt fav-icon"></span>News</a></li>
 					<li><a href="<?php echo base_url('admin/schedular') ?>"><span class="glyphicon glyphicon-time fav-icon"></span>Schedular</a></li>
 					<div class="panel panel-default nav-panel">
 							<div class="panel-heading nav-panel-heading">
