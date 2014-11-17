@@ -92,4 +92,11 @@ class Admin_model extends CI_Model {
 			return $row;
 		}
 	}
+	function news($data){
+		if($this->db->insert('news', $data)){
+			return true;
+		}
+		return false;
+		
+	}
 }
