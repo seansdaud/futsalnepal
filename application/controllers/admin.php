@@ -424,6 +424,8 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/includes/template',$data);
 	}
 	function news(){
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
 		$data = array(
 				'title' => 'News',
 				'content' => 'admin/news',
@@ -434,9 +436,9 @@ class Admin extends CI_Controller {
 		$base_url = site_url().'admin/news';
 		$config['base_url'] = $base_url;
 		$config['total_rows'] = $this->db->get('news')->num_rows();
-		$config['per_page'] = 9;
+		$config['per_page'] = 8;
 		$config['num_links'] = 5;
-		$data['news']=$this->db->where('admin',$this->session->userdata('admin'))->order_by('id', 'desc')->get('news', $config['per_page'], $this->uri->segment(3))->result();
+		$data['news']=$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('news', $config['per_page'], $this->uri->segment(3))->result();
 		$this->pagination->initialize($config);
 		$this->load->view('admin/includes/template',$data);
 	}
@@ -461,11 +463,13 @@ class Admin extends CI_Controller {
 	  		$path='assets/images/news/'.$path1;
 
 	  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+	  			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
   				$data = array(
 					'title' => $this->input->post('title'),
 					'content' => $this->input->post('content'),
 					'image'=>$path1,
-					'admin'=>$this->session->userdata('admin'),
+					'admin_id'=>$id,
 					'date' => date('Y-m-d H:i:s'),
 					'day' => date('d'),
 					'month' => date('M')
@@ -486,28 +490,30 @@ class Admin extends CI_Controller {
 			'content' => 'admin/edit_news',
 			'id' => 'news'
 		);
-
-		$data['records']=$this->db->get_where('news',array('id'=>$this->uri->segment(3),'admin'=>$this->session->userdata('admin')))->result();
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
+		$data['records']=$this->db->get_where('news',array('id'=>$this->uri->segment(3),'admin_id'=>$id))->result();
 
 		$this->load->view('admin/includes/template', $data);
 	}
 
 	function news_edit_post(){
 			$name = $_FILES['image']['name'];
-
+			$news_id=$this->input->post('id');
 			if(isset($name) && !empty($name)){
-				$results=$this->db->get_where('news',array('id'=>$this->input->post('id'),'admin'=>$this->session->userdata('admin')))->result();
-				if(!empty($results)){
-		  			$path1=$results[0]->image;
-			  		$path='assets/images/news/'.$path1;
-			  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+				$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
+				$results=$this->db->get_where('news',array('id'=>$news_id,'admin_id'=>$id))->result();
+	  			$path1=$results[0]->image;
+		  		$path='assets/images/news/'.$path1;
+		  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
 			  			$data = array(
 							'title' => $this->input->post('title'),
 							'content' => $this->input->post('content'),
 							'image' => $path1
 						);
 			  		}
-				}
+			  	}
 			else{
 				$data = array(
 					'title' => $this->input->post('title'),
@@ -515,17 +521,15 @@ class Admin extends CI_Controller {
 				);
 			}
 
-			$this->db->where('id', $this->input->post('id'));
-			$this->db->where('admin', $this->session->userdata('admin'));
+			$this->db->where('id',$news_id);
 			if($this->db->update('news', $data)){
 				$this->session->set_flashdata('msg', 'News Updated.');
 				redirect('admin/news');
 			}
 			else{
 				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
-				redirect("admin/news_edit/".$this->input->post('id'));
+				redirect("admin/news_edit/".$news_id);
 			}
-		}
 	}
 	function news_delete(){
 		$results=$this->db->get_where('news',array('id'=>$this->uri->segment(3)))->result();

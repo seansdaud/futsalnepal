@@ -4,8 +4,10 @@
 
 <?php
 	if(!empty($news)){
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
 		$i=0; 
-		$num = $this->db->where('admin',$this->session->userdata('admin'))->get('news')->num_rows();
+		$num = $this->db->where('admin_id',$id)->get('news')->num_rows();
 		foreach($news as $row): $i++; if($i==1):?>
 			<div class="row separator">
 				<div class="col-md-4 news-col">
@@ -16,7 +18,7 @@
 										'src'=>'assets/images/news/'.$row->image,
 										'class'=>'thumb',
 										'height'=> 100,
-										'width'=> 'auto'
+										'width'=> 180
 									));
 							echo "<div class='title'>".$row->title."</div>";
 						?>
@@ -39,7 +41,7 @@
 										'src'=>'assets/images/news/'.$row->image,
 										'class'=>'thumb',
 										'height'=> 100,
-										'width'=> 'auto'
+										'width'=> 180
 									));
 							echo "<div class='title'>".$row->title."</div>";
 						?>
@@ -63,7 +65,7 @@
 										'src'=>'assets/images/news/'.$row->image,
 										'class'=>'thumb',
 										'height'=> 100,
-										'width'=> 'auto'
+										'width'=> 180
 									));
 							echo "<div class='title'>".$row->title."</div>";
 						?>
