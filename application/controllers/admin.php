@@ -545,4 +545,118 @@ class Admin extends CI_Controller {
 			redirect('admin/news');
 		}
 	}
+	function video(){
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
+		$data=array(
+			'title'=>'add-video',
+			'content'=>'admin/add_video',
+			'id'=>'add-video',
+			'video'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('video')->result()
+		);
+		$this->load->view('admin/includes/template',$data);
+	}
+		public function add_video(){
+				$video= explode("=", $this->input->post('video'));
+	  			$video=str_split($video[1],11);
+	  			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
+				$data=array(
+						'name'=>$this->input->post('name'),
+						'video'=>$video[0],
+						'admin_id'=>$id,
+						'date'=>date('Y-m-d H:i:s')
+					);
+					$result=$this->admin_model->add_video($data);
+					if($result==1){
+						$this->session->set_flashdata('feedback', 'video embeded successfully!');
+						redirect('admin/video');
+					}
+					else{
+						$this->session->set_flashdata('feedback', 'Failed to embed video!');
+						redirect('admin/video');
+					}
+			}
+		public function delete_video(){
+			$result=$this->admin_model->delete_video();
+			if($result==1){
+				$this->session->set_flashdata('feedback', 'video deleted successfully');
+				redirect('admin/video');	
+			}
+		}
+
+		function album(){
+			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+			$id=$id[0]->id;
+			$data=array(
+				'title'=>'add-album',
+				'content'=>'admin/add_album',
+				'id'=>'add-album',
+				'album'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('album')->result()
+			);
+			$this->load->view('admin/includes/template',$data);
+		}
+
+		function add_album(){
+			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+			$id=$id[0]->id;
+			$data=array(
+				'name'=>$this->input->post('name'),
+				'admin_id' =>$id,
+				'date' => date('Y-m-d H:i:s')
+				);
+				$this->admin_model->add_album($data);
+				redirect('admin/album');
+		}
+		public function delete_album(){
+					$data=$this->admin_model->get_album_image();
+					foreach ($data as $datas) {
+						$path='./assets/images/album/'.$datas->image;
+						unlink($path);
+					}
+					$this->admin_model->delete_image();
+					$this->admin_model->delete_album();
+					redirect('admin/album');	
+		}
+		public function images(){
+					$data= array(
+						'title' => 'Add Images',
+						'content' => 'admin/add_images',
+						'id' => 'media',
+						'album'=>$this->db->get_where('image',array('album_id'=>$this->uri->segment(3)))->result()
+					);
+
+				$this->load->view('admin/includes/template', $data);
+
+			}
+		public function add_images(){
+
+						if(!empty($_FILES['image'])){
+					  	foreach ($_FILES['image']['name'] as $key => $name) {
+					  			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+					  			$path1= uniqid().'.'.$ext;
+						  		$path='assets/images/album/'.$path1;
+						  		if($_FILES['image']['error'][$key]==0 && move_uploaded_file($_FILES['image']['tmp_name'][$key], $path)){
+					  			$data=array(
+									'image'=>$path1,
+									'album_id'=>$this->input->post('id')
+								);
+							
+					  			$this->admin_model->add_images($data);
+							}
+				  	 	}
+
+					}
+					redirect('admin/images/'.$this->input->post('id'));
+
+			}
+		public function delete_image(){
+				$data=$this->db->where('id', $this->uri->segment(3))->get('image')->result();
+				$path='./assets/images/album/'.$data[0]->image;
+				$album_id=$data[0]->album_id;
+				unlink($path);
+				$this->db->where("id",$this->uri->segment(3));
+				$this->db->delete('image');
+				redirect('admin/images/'.$album_id);	
+			}
 }
