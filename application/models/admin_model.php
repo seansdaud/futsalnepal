@@ -99,4 +99,43 @@ class Admin_model extends CI_Model {
 		return false;
 		
 	}
+	function add_video($data){
+		if($this->db->insert('video',$data)){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+
+	 function delete_video(){
+	 	$this->db->where("id",$this->uri->segment(3));
+	 	$this->db->delete('video');
+	 	return 1;
+	 }
+	 function get_album_cover_image($id) {
+		$image = $this->db->where('album_id', $id)->get('image')->num_rows();
+		if($image == 0){
+			return array('image' => 'default.jpg');
+		}
+
+		return $this->db->where('album_id', $id)->order_by('id', 'desc')->limit(1)->get('image')->result();
+	}
+	function add_album($data){
+		$this->db->insert('album',$data);
+		return ;
+	}
+	function get_album_image(){
+		$results=$this->db->get_where('image',array('album_id'=>$this->uri->segment(3)))->result();
+	 	return $results;
+	}
+	function delete_album(){
+		$this->db->where("id",$this->uri->segment(3));
+			$this->db->delete('album');
+			return;
+	}
+	function add_images($data){
+		$this->db->insert('image',$data);
+		return ;
+	}
 }
