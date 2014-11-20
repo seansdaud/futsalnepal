@@ -39,7 +39,7 @@ hr {
 }
 
 .navigation{
-	background: #555555;
+	background: #428bca;
 	height: 50px;
 	width: 100%;
 }
@@ -695,4 +695,7 @@ h2{
 .email{
 	text-align: center;
 	color: #C77979;
+}
+.remove{
+	float:right;
 }
