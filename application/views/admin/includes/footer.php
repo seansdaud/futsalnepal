@@ -53,7 +53,16 @@ showAnim:'bounce' // fadein show etc
 		        }
 		    });
 		});
-		   
+				$('.copy').live('keyup',function(){
+ 					var the=$(this).val();
+ 					if($("#checker").prop('checked')){
+ 						$(".copy").each(function(){
+ 							$(".copy").val(the);
+	 						});
+ 					}
+					});
+				
+
 
 	</script>
 </body>

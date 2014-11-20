@@ -6,7 +6,7 @@ echo form_open("admin/update_schedule",$attributes); ?>
 <div class="panel-body"><div id="id"></div>
 <div id="time"></div>
 
-
+<input type='checkbox' id='checker'/><label for='checker'>Type all</label>
 	<table id='mytable' class="table" name='futsal-table' border=1 width=100% >
 													
 			<tr>
@@ -38,12 +38,12 @@ echo form_open("admin/update_schedule",$attributes); ?>
 																<div class="row">
 															<tr>
 															<td name='time'><?php echo $key->start_time; ?>--<?php echo $key->end_time; ?></td>
-															<td ><input type='text' class="form-control" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></td>
+															<td ><input type='text' class="form-control  copy" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></td>
 															<input type='hidden' name='id<?php echo $c; ?>' value='<?php echo $key->id; ?>'>
 															<input type='hidden' name='start_time<?php echo $c; ?>' value='<?php echo $key->start_time; ?>'>
 															<input type='hidden' name='end_time<?php echo $c; ?>' value='<?php echo $key->end_time; ?>'>
 														<?php elseif ($i==7): ?>
-																<td ><span><input type='text' class="form-control" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></span></td>
+																<td ><span><input type='text' class="form-control copy" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></span></td>
 																<input type='hidden' name='id<?php echo $c; ?>' value='<?php echo $key->id; ?>'>
 																<input type='hidden' name='start_time<?php echo $c; ?>' value='<?php echo $key->start_time; ?>'>
 																<input type='hidden' name='end_time<?php echo $c; ?>' value='<?php echo $key->end_time; ?>'>
@@ -52,7 +52,7 @@ echo form_open("admin/update_schedule",$attributes); ?>
 																<?php $i=0; ?>
 																<?php $j++;?>
 														<?php elseif ($i<8) : ?>
-															<td ><span><input type='text' class="form-control" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></span></td>
+															<td ><span><input type='text' class="form-control copy" name='<?php echo $i; echo $j; ?>' value='<?php echo $key->price; ?>' ></span></td>
 															<input type='hidden' name='id<?php echo $c; ?>' value='<?php echo $key->id; ?>'>
 															<input type='hidden' name='start_time<?php echo $c; ?>' value='<?php echo $key->start_time; ?>'>
 															<input type='hidden' name='end_time<?php echo $c; ?>' value='<?php echo $key->end_time; ?>'>
