@@ -569,7 +569,7 @@ h2{
 
 .admin-album img {
 	height: 201px;
-	width: 300px;
+	width: 277px;
 }
 
 .album-title {
@@ -688,6 +688,8 @@ h2{
 }
 .feedback{
 	text-align:center;
+	font-weight:bold;
+	color:red;
 }
 .email{
 	text-align: center;
