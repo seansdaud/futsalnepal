@@ -4,7 +4,7 @@
 	<?php foreach($records as $row): ?>
   	<tr>
 	  <td><?php echo anchor("superAdmin/admin_details/$row->id", $row->username); ?></td>
-	  <div class="remove"><td><?php echo anchor("superAdmin/remove_admin/$row->id","<span class='glyphicon glyphicon-remove fav-icon'></span>"); ?></td></div>
+	  <td><div class="remove"><?php echo anchor("superAdmin/remove_admin/$row->id","<span class='glyphicon glyphicon-remove fav-icon'></span>"); ?></div></td>
 	</tr>
 <?php endforeach; ?>
 <?php else: ?>

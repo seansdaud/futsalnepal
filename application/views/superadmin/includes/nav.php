@@ -19,7 +19,10 @@
 						<img src="<?php echo base_url('assets/images/default.jpg'); ?>" height="80px" width="80px">
 					<?php endif; ?>
 				</div>
+				<?php $email = $this->db->select('email')->where('username',$this->session->userdata('superadmin'))->get('superadmin')->result(); ?>
+				<?php $email = $email[0]->email; ?>
 				<div class="username">Welcome <?php echo ucfirst($this->session->userdata('superadmin')); ?></div>
+				<div class="email"><?php echo $email; ?></div>
 			</div>
 			<nav>
 				<ul class="sidebar-navigation">
