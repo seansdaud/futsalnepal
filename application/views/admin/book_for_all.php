@@ -1,6 +1,6 @@
 <h1 class="heading"><?php 
 $name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
-		echo "Booking for ".$name[0]->name."<br/>"; ?>
+		echo "Booking for ".$name[0]->name.""; ?>
 		</h1>
 <?php if(!empty( $getdate)):?>
 <div class="show">
@@ -27,13 +27,12 @@ $name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->r
 				$day=$i+1;
 			}
 		}
-		print_r($day);
-		print_r($date);
+	
 		echo "<input type='hidden' id='today' value='".$day."' >";
 		// echo "</br>";$date=date($getdate); 
-		echo "<div class='today'>Date:</div>".$date."</br>";
+		echo "<div class='today'>Date:".$date."</div></br>";
 		echo " <input type='hidden' id='date' value='".$date."' >";
-		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
+		echo "<div class='today'>Current-time:".date( "g:i a")."</div></br>";
 
  	?>
  </div>
