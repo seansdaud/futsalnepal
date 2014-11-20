@@ -42,6 +42,7 @@ function newstart(first){
 	for (var i = 0; i< diff; i++) {
 		 array.push(i);
 	};
+
 	$("#result").html("<table id='mytable' class='table' name='futsal-table' border=1 width=100% >"+
 		"<tbody id='my'>"+
 														"<tr>"+
@@ -58,14 +59,14 @@ function newstart(first){
 														 var $container = $('<div></div>');
 														    $.each(array, function(val) {
 														        $container.append($("<tr/>").append(
-														        	 $("<td/>").html("<span>"+start_time1+"--"+newstart(start_time1)+"</span>"),
-														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='1"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='2"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='3"+val+"'></span>"), 
-														        	  $("<td/>").html("<span><input class='form-control copy' type='text' name='4"+val+"'></span>"),
-														        	   $("<td/>").html("<span><input class='form-control copy' type='text' name='5"+val+"'></span>"),
-														        	    $("<td/>").html("<span><input class='form-control copy' type='text' name='6"+val+"'></span>"),
-														        	     $("<td/>").html("<span><input class='form-control copy' type='text' name='7"+val+"'></span>")
+														        	  $("<td/>").html("<span>"+start_time1+"--"+newstart(start_time1)+"</span>"),
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='1"+val+"' ></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy'  type='number' step='any'name='2"+val+"' ></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='3"+val+"' ></span>"), 
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='4"+val+"' ></span>"),
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='5"+val+"' ></span>"),
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='6"+val+"' ></span>"),
+														        	  $("<td/>").html("<span><input class='form-control copy' type='number' step='any' name='7"+val+"' ></span>")
 														        	
 														        ));
 														      
@@ -76,21 +77,13 @@ function newstart(first){
 
 														   return $container.html();
 														});
-$("#submit").html("<input type='submit' class='btn btn-primary ' value='update'>");
-
+$("#submit").html("<input type='submit' class='btn btn-primary submitsch' value='update'>");
+$("#checked").html(" <input type='checkbox' id='checker'/><label for='checker'>Type all</label>");
 });	
 
 
 });
-$(".copy").keyup(function(){
-	alert("ASd");
-		// var copy = $(this).val();	
-		// $(this).val(copy);	
-});
-$( ".copy" ).on( "click", function(){
-  alert( "This will be displayed only once." );
-  $( this ).off( event );
-});
+
 // // $("#submit").html("<input type='button' onclick='submit_ajax()' value='update'>");
 //  function get_ajax(){
 //  	var base_url= $('#base_url').val();
@@ -184,6 +177,8 @@ $( ".copy" ).on( "click", function(){
 // }
 
 function update_ajax(){
+
+	
 		var base_url= $('#base_url').val();
 		var form_data = $("#myform1").serialize();
 		$.ajax({

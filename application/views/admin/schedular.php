@@ -19,9 +19,9 @@
 			 <input name="create" type="button"  class="btn btn-primary"  value="Create Schedule" required>
 		</div>
 		<input type="hidden" id="base_url" value="<?php echo base_url(); ?>">
-
+		
 		<div id="time"></div>
-		<br>
+		<div id="checked"></div>
 		<div id="result"></div>
 		<div id="submit" ></div>
 	<?php echo form_close(); ?>
