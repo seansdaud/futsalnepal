@@ -33,13 +33,16 @@
 		});
 		   $(".adminid").each(function(){
 		   	
-		   	var th=$(this).val();
-		var today = $("#today").val();
-		var now=parseInt(today) ;
-		var th=parseInt(th) ;
-	$(" ."+now+th).addClass("active");
-		   });
+		   		var th=$(this).val();
+				var today = $("#today").val();
+				var now=parseInt(today) ;
+				var th=parseInt(th) ;
+			$(" ."+now+th).addClass("active");
+				   });
 
+		   function checkNumeric(n) {
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			}
 	</script>
 </body>
 </html>
