@@ -423,4 +423,240 @@ class Admin extends CI_Controller {
 			);
 		$this->load->view('admin/includes/template',$data);
 	}
+	function news(){
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
+		$data = array(
+				'title' => 'News',
+				'content' => 'admin/news',
+				'id'=>'todayschedular',
+			);
+		$this->load->library('pagination');
+		$this->load->library('table');
+		$base_url = site_url().'admin/news';
+		$config['base_url'] = $base_url;
+		$config['total_rows'] = $this->db->get('news')->num_rows();
+		$config['per_page'] = 8;
+		$config['num_links'] = 5;
+		$data['news']=$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('news', $config['per_page'], $this->uri->segment(3))->result();
+		$this->pagination->initialize($config);
+		$this->load->view('admin/includes/template',$data);
+	}
+	function create_news(){
+		$data=array(
+				'title'=>'create news',
+				'content'=>'admin/create_news',
+				'id'=>'create_news'
+			);
+		$this->load->view('admin/includes/template',$data);
+	}
+	function news_post(){
+		$this->form_validation->set_rules('title', 'Title', 'is_unique[news.title]');
+		$this->form_validation->set_rules('content', 'Content', 'trim|required');
+		if($this->form_validation->run() == false){
+			$this->create_news();
+		}
+		else{
+  			$name=$_FILES['image']['name'];
+  			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+  			$path1= uniqid().'.'.$ext;
+	  		$path='assets/images/news/'.$path1;
+
+	  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+	  			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
+  				$data = array(
+					'title' => $this->input->post('title'),
+					'content' => $this->input->post('content'),
+					'image'=>$path1,
+					'admin_id'=>$id,
+					'date' => date('Y-m-d H:i:s'),
+					'day' => date('d'),
+					'month' => date('M')
+				);
+			}
+			if($this->admin_model->news($data)){
+				redirect('admin/news');
+			}
+			else{
+				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+			}
+
+		}
+	}
+	function news_edit(){
+		$data = array(
+			'title' => 'Edit News',
+			'content' => 'admin/edit_news',
+			'id' => 'news'
+		);
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
+		$data['records']=$this->db->get_where('news',array('id'=>$this->uri->segment(3),'admin_id'=>$id))->result();
+
+		$this->load->view('admin/includes/template', $data);
+	}
+
+	function news_edit_post(){
+			$name = $_FILES['image']['name'];
+			$news_id=$this->input->post('id');
+			if(isset($name) && !empty($name)){
+				$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
+				$results=$this->db->get_where('news',array('id'=>$news_id,'admin_id'=>$id))->result();
+	  			$path1=$results[0]->image;
+		  		$path='assets/images/news/'.$path1;
+		  		if($_FILES['image']['error']==0 && move_uploaded_file($_FILES['image']['tmp_name'], $path)){
+			  			$data = array(
+							'title' => $this->input->post('title'),
+							'content' => $this->input->post('content'),
+							'image' => $path1
+						);
+			  		}
+			  	}
+			else{
+				$data = array(
+					'title' => $this->input->post('title'),
+					'content' => $this->input->post('content')
+				);
+			}
+
+			$this->db->where('id',$news_id);
+			if($this->db->update('news', $data)){
+				$this->session->set_flashdata('msg', 'News Updated.');
+				redirect('admin/news');
+			}
+			else{
+				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+				redirect("admin/news_edit/".$news_id);
+			}
+	}
+	function news_delete(){
+		$results=$this->db->get_where('news',array('id'=>$this->uri->segment(3)))->result();
+		$path='./assets/images/news/'.$results[0]->image;
+		unlink($path);
+		$this->db->where('id', $this->uri->segment(3));
+		if($this->db->delete('news')){
+			$this->session->set_flashdata('msg', 'Deleted Successfully');
+			redirect('admin/news');
+		}
+		else{
+			$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+			redirect('admin/news');
+		}
+	}
+	function video(){
+		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+		$id=$id[0]->id;
+		$data=array(
+			'title'=>'add-video',
+			'content'=>'admin/add_video',
+			'id'=>'add-video',
+			'video'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('video')->result()
+		);
+		$this->load->view('admin/includes/template',$data);
+	}
+		public function add_video(){
+				$video= explode("=", $this->input->post('video'));
+	  			$video=str_split($video[1],11);
+	  			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+				$id=$id[0]->id;
+				$data=array(
+						'name'=>$this->input->post('name'),
+						'video'=>$video[0],
+						'admin_id'=>$id,
+						'date'=>date('Y-m-d H:i:s')
+					);
+					$result=$this->admin_model->add_video($data);
+					if($result==1){
+						$this->session->set_flashdata('feedback', 'video embeded successfully!');
+						redirect('admin/video');
+					}
+					else{
+						$this->session->set_flashdata('feedback', 'Failed to embed video!');
+						redirect('admin/video');
+					}
+			}
+		public function delete_video(){
+			$result=$this->admin_model->delete_video();
+			if($result==1){
+				$this->session->set_flashdata('feedback', 'video deleted successfully');
+				redirect('admin/video');	
+			}
+		}
+
+		function album(){
+			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+			$id=$id[0]->id;
+			$data=array(
+				'title'=>'add-album',
+				'content'=>'admin/add_album',
+				'id'=>'add-album',
+				'album'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('album')->result()
+			);
+			$this->load->view('admin/includes/template',$data);
+		}
+
+		function add_album(){
+			$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
+			$id=$id[0]->id;
+			$data=array(
+				'name'=>$this->input->post('name'),
+				'admin_id' =>$id,
+				'date' => date('Y-m-d H:i:s')
+				);
+				$this->admin_model->add_album($data);
+				redirect('admin/album');
+		}
+		public function delete_album(){
+					$data=$this->admin_model->get_album_image();
+					foreach ($data as $datas) {
+						$path='./assets/images/album/'.$datas->image;
+						unlink($path);
+					}
+					$this->admin_model->delete_image();
+					$this->admin_model->delete_album();
+					redirect('admin/album');	
+		}
+		public function images(){
+					$data= array(
+						'title' => 'Add Images',
+						'content' => 'admin/add_images',
+						'id' => 'media',
+						'album'=>$this->db->get_where('image',array('album_id'=>$this->uri->segment(3)))->result()
+					);
+
+				$this->load->view('admin/includes/template', $data);
+
+			}
+		public function add_images(){
+
+						if(!empty($_FILES['image'])){
+					  	foreach ($_FILES['image']['name'] as $key => $name) {
+					  			$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+					  			$path1= uniqid().'.'.$ext;
+						  		$path='assets/images/album/'.$path1;
+						  		if($_FILES['image']['error'][$key]==0 && move_uploaded_file($_FILES['image']['tmp_name'][$key], $path)){
+					  			$data=array(
+									'image'=>$path1,
+									'album_id'=>$this->input->post('id')
+								);
+							
+					  			$this->admin_model->add_images($data);
+							}
+				  	 	}
+
+					}
+					redirect('admin/images/'.$this->input->post('id'));
+
+			}
+		public function delete_image(){
+				$data=$this->db->where('id', $this->uri->segment(3))->get('image')->result();
+				$path='./assets/images/album/'.$data[0]->image;
+				$album_id=$data[0]->album_id;
+				unlink($path);
+				$this->db->where("id",$this->uri->segment(3));
+				$this->db->delete('image');
+				redirect('admin/images/'.$album_id);	
+			}
 }
