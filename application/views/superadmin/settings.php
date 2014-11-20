@@ -1,4 +1,4 @@
-<h1 class="heading">Admin Settings</h1>
+<h1 class="heading">SuperAdmin Settings</h1>
 
 <div class="panel-group" id="accordian">
 

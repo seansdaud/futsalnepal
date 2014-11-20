@@ -1,4 +1,4 @@
-
+<h1 class="heading">Create Admin</h1>
 <div class="row">
 	<div class="col-md-5">
 		<form action="<?php echo site_url().'SuperAdmin/create_admin_post'; ?>" method='post' data-toggle='validator'>
