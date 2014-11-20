@@ -8,6 +8,7 @@
 				<?php endif; ?>
 				<?php 
 					echo $records[0]->username."<br />";
-					echo $records[0]->email."<br />"; ?>
+					echo $records[0]->email."<br />";
+					echo $records[0]->fieldname."<br />"; ?>
 	<?php } ?>
 	
