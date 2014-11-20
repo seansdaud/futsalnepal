@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/style.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url().'assets/css/jquery.timepicker.css'; ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/admin.css'); ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/lightbox.css'); ?>">
 	  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/jquery-ui-1.10.4.css'); ?>">
 		<style type="text/css">
 

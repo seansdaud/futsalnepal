@@ -1,8 +1,9 @@
-<br/>
+
+<h1 class="heading">Create Schedule</h1>
 <div class="panel-body"> 
 	<?php $attributes = array( 'id' => 'myform');
 	echo form_open("admin/add_schedule",$attributes); ?>
-		<div>
+		<div >
 			<label for="start_time">Starting Time:</label>
 		</div>
 		<div class="form-group">

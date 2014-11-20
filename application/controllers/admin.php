@@ -429,7 +429,7 @@ class Admin extends CI_Controller {
 		$data = array(
 				'title' => 'News',
 				'content' => 'admin/news',
-				'id'=>'todayschedular',
+				'id'=>'medias',
 			);
 		$this->load->library('pagination');
 		$this->load->library('table');
@@ -446,7 +446,7 @@ class Admin extends CI_Controller {
 		$data=array(
 				'title'=>'create news',
 				'content'=>'admin/create_news',
-				'id'=>'create_news'
+				'id'=>'medias'
 			);
 		$this->load->view('admin/includes/template',$data);
 	}
@@ -489,7 +489,7 @@ class Admin extends CI_Controller {
 		$data = array(
 			'title' => 'Edit News',
 			'content' => 'admin/edit_news',
-			'id' => 'news'
+			'id' => 'medias'
 		);
 		$id=$this->db->select('id')->get_where('admin',array('username'=>$this->session->userdata('admin')))->result();
 		$id=$id[0]->id;
@@ -552,7 +552,7 @@ class Admin extends CI_Controller {
 		$data=array(
 			'title'=>'add-video',
 			'content'=>'admin/add_video',
-			'id'=>'add-video',
+			'id'=>'medias',
 			'video'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('video')->result()
 		);
 		$this->load->view('admin/includes/template',$data);
@@ -592,7 +592,7 @@ class Admin extends CI_Controller {
 			$data=array(
 				'title'=>'add-album',
 				'content'=>'admin/add_album',
-				'id'=>'add-album',
+				'id'=>'medias',
 				'album'=>$this->db->where('admin_id',$id)->order_by('id', 'desc')->get('album')->result()
 			);
 			$this->load->view('admin/includes/template',$data);
@@ -604,7 +604,8 @@ class Admin extends CI_Controller {
 			$data=array(
 				'name'=>$this->input->post('name'),
 				'admin_id' =>$id,
-				'date' => date('Y-m-d H:i:s')
+				'date' => date('Y-m-d H:i:s'),
+				'id' => 'medias',
 				);
 				$this->admin_model->add_album($data);
 				$this->session->set_flashdata('feedback', 'Album successfully added!!');
@@ -625,7 +626,7 @@ class Admin extends CI_Controller {
 					$data= array(
 						'title' => 'Add Images',
 						'content' => 'admin/add_images',
-						'id' => 'media',
+						'id' => 'medias',
 						'album'=>$this->db->get_where('image',array('album_id'=>$this->uri->segment(3)))->result()
 					);
 

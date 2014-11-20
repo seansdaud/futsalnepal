@@ -1,3 +1,4 @@
+<h1 class="heading">Schedule Today</h1>
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 

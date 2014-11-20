@@ -1,9 +1,12 @@
+<h1 class="heading"><?php 
+$name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
+		echo "Booking for ".$name[0]->name."<br/>"; ?>
+		</h1>
 <?php if(!empty( $getdate)):?>
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
-		$name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
-		echo "Booking for ".$name[0]->name."<br/>";
+		
 		// echo date('w') +1; 
 		// $day=date('w') +1; 
 		// echo "<input type='hidden' id='today' value='".$day."' >";

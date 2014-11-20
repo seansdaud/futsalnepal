@@ -1,3 +1,4 @@
+<h1 class="heading">Schedule</h1>
 <?php if(!empty( $getdate)):?>
 <div class="show">
 	<?php

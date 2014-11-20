@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/bootstrap.min.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/jquery.timepicker.js' ?>"></script>
 	<script type="text/javascript" src="<?php echo site_url().'assets/js/customs.js' ?>"></script>
+	 <script type="text/javascript" src="<?php echo base_url("assets/js/lightbox.js"); ?>"></script>
 	<script type='text/javascript' src='<?php echo site_url().'assets/js/jquery-ui-1.9.2.js' ?>'></script> 
 	<script type="text/javascript">$('input[name=start_time]').timepicker();</script>
 	<script type="text/javascript">$('input[name=end_time]').timepicker();</script>
@@ -29,6 +30,8 @@ showAnim:'bounce' // fadein show etc
    $("#books .sidebar-navigation #book").addClass('in');
     $("#showschedular .sidebar-navigation a:contains('Update Schedule')").addClass('active');
      $("#todayschedular .sidebar-navigation a:contains('Today's Booking')").addClass('active');
+      $("#medias .sidebar-navigation a:contains('Media')").addClass('active');
+   $("#medias .sidebar-navigation #media").addClass('in');
 		$("#imagePreview  ").hide();
 
 		$(function() {

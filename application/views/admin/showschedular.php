@@ -1,4 +1,5 @@
 <!-- <div id="show"> -->
+<h1 class="heading">Update Schedule</h1>
 <?php $attributes = array( 'id' => 'myform1');
 echo form_open("admin/update_schedule",$attributes); ?>
 <input type="hidden" id="base_url" value="<?php echo base_url(); ?>">

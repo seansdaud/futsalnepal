@@ -58,9 +58,9 @@
 					<div class="panel-group nav-panel-group" id="navaccordian">					
 						<div class="panel panel-default nav-panel">
 							<div class="panel-heading nav-panel-heading">
-								<li><a href="#medias" data-toggle="collapse" data-parent="#navaccordian"><span class="glyphicon glyphicon-facetime-video fav-icon"></span>Media<span class="glyphicon glyphicon-chevron-down drop-up"></span></a></li>
+								<li><a href="#media" data-toggle="collapse" data-parent="#navaccordian"><span class="glyphicon glyphicon-facetime-video fav-icon"></span>Media<span class="glyphicon glyphicon-chevron-down drop-up"></span></a></li>
 							</div>
-							<div class="panel-collapse collapse" id="medias">
+							<div class="panel-collapse collapse" id="media">
 								<div class="panel-body nav-panel-body">
 									<li>
 										<ul>
