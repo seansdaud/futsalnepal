@@ -1,17 +1,14 @@
-<div>
-
-	<?php 
-		if(isset($records)) {
-
-			foreach($records as $row):
-				echo anchor("superAdmin/admin_details/$row->id", $row->username);
-				echo "<br />";
-			endforeach;
-		}
-		else{
-			echo "No Admins";
-		}
-		echo $this->pagination->create_links();
-	?>
-
-</div>
+<h1 class="heading">Admins</h1>
+<?php if(isset($records)): ?>
+<table class="table table-hover">
+	<?php foreach($records as $row): ?>
+  	<tr>
+	  <td><?php echo anchor("superAdmin/admin_details/$row->id", $row->username); ?></td>
+	  <div class="remove"><td><?php echo anchor("superAdmin/remove_admin/$row->id","<span class='glyphicon glyphicon-remove fav-icon'></span>"); ?></td></div>
+	</tr>
+<?php endforeach; ?>
+<?php else: ?>
+	No admins
+</table>
+<?php endif; ?>
+<?php echo $this->pagination->create_links(); ?>

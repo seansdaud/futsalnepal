@@ -100,15 +100,10 @@ class SuperAdmin extends CI_Controller{
 
 	function admin_details(){
 		$data = array(
-			'content' => 'superadmin/admin_details'
+			'title'=>'admin',
+			'content' => 'superadmin/admin_details',
+			'records'=>$this->db->get_where('admin',array('id'=>$this->uri->segment(3)))->result()
 		);
-
-		$this->db->where('id', $this->uri->segment(3));
-		$query = $this->db->get('admin')->result();
-		$data['records'] = $query;
-		foreach($query as $rows):
-			$data['title'] = $rows->username;
-		endforeach;
 
 		$this->load->view('superadmin/includes/template', $data);
 	}
