@@ -3,7 +3,7 @@
 
 class Work_model extends CI_Model {
 	function get_admin(){
-		$this->db->select('id,username'); 
+		$this->db->select('id,username,fieldname'); 
 	    $this->db->from('admin');   
 	    return $this->db->get()->result();
 	}

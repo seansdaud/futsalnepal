@@ -39,6 +39,5 @@
 			</ul>
 		<?php endif; ?>
 		</nav>
-		<div><?php echo $this->session->flashdata('feedback');?></div>
 	</div>
 </div>
