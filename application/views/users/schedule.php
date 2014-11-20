@@ -2,14 +2,14 @@
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
 
-		echo date('w') +1; 
+		//echo date('w') +1; 
 		$day=date('w') +1; 
 		echo "<input type='hidden' id='today' value='".$day."' >";
 		echo "</br>";
 		$date=date("Y-m-d"); 
 		echo "<div class='today'>Date:</div>".$date."</br>";
 		echo " <input type='hidden' id='date' value='".$date."' >";
-		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
+		//echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
  	?>
  </div>
  <?php echo form_open("admin/detail_schedular_post"); ?>
@@ -25,7 +25,7 @@
 <?php echo form_close(); ?>
 <?php foreach ($admin as $admins ):?>
 	<?php 	echo "<input type='hidden' class='adminid' value='".$admins->id."' >"; ?>
-<div class="show">Schedule for <?php echo $admins->username; ?>:</div>
+<div class="show">Schedule for <?php echo $admins->fieldname; ?>:</div>
 </br>
 <ul class="nav nav-tabs" role="tablist">
   <li class="1<?php echo $admins->id; ?>" ><a href="#1<?php echo $admins->id; ?>" role="tab" data-toggle="tab">Sunday</a></li>

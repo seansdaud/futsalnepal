@@ -45,7 +45,8 @@ class SuperAdmin extends CI_Controller{
 			$data = array(
 				'username' => $username,
 				'password' => sha1($this->input->post('password')),
-				'email' => $this->input->post('email')
+				'email' => $this->input->post('email'),
+				'fieldname'=>$this->input->post('fieldname')
 			);
 
 			$this->load->model('superadmin_model');
@@ -53,11 +54,11 @@ class SuperAdmin extends CI_Controller{
 
 			if($query){
 				$this->session->set_flashdata('feedback', 'New admin successfully created.');
-				redirect('superadmin');
+				redirect('admins');
 			}
 			else{
 				$this->session->set_flashdata('feedback', 'Error occured. Please try again');
-				redirect('superadmin');
+				redirect('superadmin/create_admin');
 			}
 		}
 	}
