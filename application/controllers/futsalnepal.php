@@ -71,8 +71,8 @@ class Futsalnepal extends CI_Controller {
 		  'protocol' => 'smtp',
 		  'smtp_host' => 'ssl://smtp.gmail.com',
 		  'smtp_port' => 465,
-		  'smtp_user' => 'prachanda.gurung@gmail.com', 
-		  'smtp_pass' => '6twotwo0tangible', 
+		  'smtp_user' => 'slimshady320@gmail.com', 
+		  'smtp_pass' => 'lastlife', 
 		  'mailtype' => 'html',
 		  'charset' => 'iso-8859-1',
 		  'wordwrap' => TRUE
