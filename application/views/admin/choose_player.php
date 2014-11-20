@@ -1,3 +1,4 @@
+<h1 class="heading">Choose Username For Booking</h1>
 <div class="panel-body">
 	<?php echo form_open("admin/pre_book_schedule"); ?>
 		<div class="form-group ">

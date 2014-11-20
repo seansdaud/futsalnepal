@@ -1,3 +1,4 @@
+<h1 class="heading">Type Player</h1>
 <div class="panel-body">
 	<?php echo form_open("admin/custom_book_schedule"); ?>
 		<div class="form-group ">
