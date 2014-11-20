@@ -129,6 +129,11 @@ class Admin_model extends CI_Model {
 		$results=$this->db->get_where('image',array('album_id'=>$this->uri->segment(3)))->result();
 	 	return $results;
 	}
+	function delete_image(){
+		$this->db->where("album_id",$this->uri->segment(3));
+			$this->db->delete('image');
+			return;
+	}
 	function delete_album(){
 		$this->db->where("id",$this->uri->segment(3));
 			$this->db->delete('album');

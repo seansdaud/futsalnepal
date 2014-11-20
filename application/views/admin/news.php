@@ -1,5 +1,5 @@
 <h1 class="heading">Media/News</h1>
-
+<div class="feedback"><?php echo $this->session->flashdata('feedback');?></div>
 <h2 class="btn btn-default submit btn-log"><?php echo anchor('admin/create_news', 'Create News') ?></h2>
 
 <?php

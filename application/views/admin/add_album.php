@@ -1,5 +1,5 @@
 <h1 class="heading">Add Album</h1>
-
+<div class="feedback"><?php echo $this->session->flashdata('feedback');?></div>
 <?php echo form_open_multipart('admin/add_album/', array('data-toggle' => 'validator'))?>
   	<div class="form-group">
   		<input type="text"  class="form-control" id ="album_name" name="name" placeholder="Enter Album Name" required>
@@ -21,7 +21,7 @@
 				<?php foreach($image as $images): ?>
 
 					<?php if(empty($images->image)): ?>
-						<img src="<?php echo base_url('assets/images/default.jpg'); ?>" width="80px">
+						<img src="<?php echo base_url('assets/images/default.jpg'); ?>">
 					<?php else: ?>							
 						<img src="<?php echo base_url('assets/images/album/'.$images->image); ?>">
 					<?php endif; ?>
