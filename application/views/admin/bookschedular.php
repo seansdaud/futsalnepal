@@ -1,6 +1,6 @@
 <h1 class="heading"><?php 
 $name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->result();
-		echo "Booking for ".$name[0]->name."<br/>"; ?>
+		echo "Booking for ".$name[0]->name.""; ?>
 		</h1>
 <div class="show">
 	<?php
@@ -16,15 +16,13 @@ $name=$this->db->where('id',$this->session->userdata('user_id'))->get('user')->r
 		// echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
 
 		date_default_timezone_set("Asia/Katmandu"); 
-
-		echo date('w') +1; 
 		$day=date('w') +1; 
 		echo "<input type='hidden' id='today' value='".$day."' >";
 		echo "</br>";
 		$date=date("Y-m-d"); 
-		echo "<div class='today'>Date:</div>".$date."</br>";
+		echo "<div class='today'>Date:".$date."</div></br>";
 		echo " <input type='hidden' id='date' value='".$date."' >";
-		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
+		echo "<div class='today'>Current-time:".date( "g:i a")."</div></br>";
  
  	?>
  </div>

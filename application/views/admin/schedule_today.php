@@ -2,15 +2,13 @@
 <div class="show">
 	<?php
 		date_default_timezone_set("Asia/Katmandu"); 
-
-		echo date('w') +1; 
 		$day=date('w') +1; 
 		echo "<input type='hidden' id='today' value='".$day."' >";
 		echo "</br>";
 		$date=date("Y-m-d"); 
-		echo "<div class='today'>Date:</div>".$date."</br>";
+		echo "<div class='today'>Date:".$date."</div></br>";
 		echo " <input type='hidden' id='date' value='".$date."' >";
-		echo "<div class='today'>Current-time:</div>".date( "g:i a")."</br>";
+		echo "<div class='today'>Current-time:".date( "g:i a")."</div></br>";
  	?>
  </div>
  <?php echo form_open("admin/detail_schedular_post"); ?>
