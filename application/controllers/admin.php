@@ -476,10 +476,11 @@ class Admin extends CI_Controller {
 				);
 			}
 			if($this->admin_model->news($data)){
+				$this->session->set_flashdata('feedback', 'News successfully created!!');
 				redirect('admin/news');
 			}
 			else{
-				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+				$this->session->set_flashdata('feedback', 'Something went wrong. Please try again.');
 			}
 
 		}
@@ -523,11 +524,11 @@ class Admin extends CI_Controller {
 
 			$this->db->where('id',$news_id);
 			if($this->db->update('news', $data)){
-				$this->session->set_flashdata('msg', 'News Updated.');
+				$this->session->set_flashdata('feedback', 'News Updated.');
 				redirect('admin/news');
 			}
 			else{
-				$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+				$this->session->set_flashdata('feedback', 'Something went wrong. Please try again.');
 				redirect("admin/news_edit/".$news_id);
 			}
 	}
@@ -537,11 +538,11 @@ class Admin extends CI_Controller {
 		unlink($path);
 		$this->db->where('id', $this->uri->segment(3));
 		if($this->db->delete('news')){
-			$this->session->set_flashdata('msg', 'Deleted Successfully');
+			$this->session->set_flashdata('feedback', 'Deleted Successfully!!');
 			redirect('admin/news');
 		}
 		else{
-			$this->session->set_flashdata('msg', 'Something went wrong. Please try again.');
+			$this->session->set_flashdata('feedback', 'Something went wrong. Please try again.');
 			redirect('admin/news');
 		}
 	}
@@ -580,7 +581,7 @@ class Admin extends CI_Controller {
 		public function delete_video(){
 			$result=$this->admin_model->delete_video();
 			if($result==1){
-				$this->session->set_flashdata('feedback', 'video deleted successfully');
+				$this->session->set_flashdata('feedback', 'video successfully deleted!!');
 				redirect('admin/video');	
 			}
 		}
@@ -607,6 +608,7 @@ class Admin extends CI_Controller {
 				'id' => 'medias',
 				);
 				$this->admin_model->add_album($data);
+				$this->session->set_flashdata('feedback', 'Album successfully added!!');
 				redirect('admin/album');
 		}
 		public function delete_album(){
@@ -617,6 +619,7 @@ class Admin extends CI_Controller {
 					}
 					$this->admin_model->delete_image();
 					$this->admin_model->delete_album();
+					$this->session->set_flashdata('feedback', 'Album deleted!!');
 					redirect('admin/album');	
 		}
 		public function images(){
@@ -643,12 +646,15 @@ class Admin extends CI_Controller {
 									'album_id'=>$this->input->post('id')
 								);
 							
-					  			$this->admin_model->add_images($data);
-							}
-				  	 	}
+					  				$this->admin_model->add_images($data);
+					  			}
+							
+					  	 	}
 
-					}
-					redirect('admin/images/'.$this->input->post('id'));
+						}
+					
+						$this->session->set_flashdata('feedback', 'Images successfully added!!');
+						redirect('admin/images/'.$this->input->post('id'));
 
 			}
 		public function delete_image(){
@@ -658,6 +664,7 @@ class Admin extends CI_Controller {
 				unlink($path);
 				$this->db->where("id",$this->uri->segment(3));
 				$this->db->delete('image');
+				$this->session->set_flashdata('feedback', 'Image successfully deleted!!');
 				redirect('admin/images/'.$album_id);	
 			}
 }

@@ -8,9 +8,10 @@
 	if($admin_id==$admin):
 ?>
 		<?php echo form_open_multipart('admin/add_images/', array('data-toggle'=>'validator'))?>
-		
+		<h1 class="heading">Add Image's to your album</h1>
+		<div class="feedback"><?php echo $this->session->flashdata('feedback');?></div>
 		<div class="form-group">
-			<div><label for="file">Add image's</label></div>
+			<div><label for="file"></label></div>
 			<input type="file" id="file" name="image[]" multiple="multiple" accept="image/gif, image/jpeg, image/png" required/>
 			<div class="help-block with-errors"></div>
 		</div>

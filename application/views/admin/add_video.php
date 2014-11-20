@@ -1,6 +1,6 @@
 <h1 class="heading">Media / Videos</h1>
 
-<?php echo $this->session->flashdata('feedback');?>
+<div class="feedback"><?php echo $this->session->flashdata('feedback');?></div>
 
 <?php echo form_open('admin/add_video', array('data-toggle'=> 'validator')); ?>
 	<h1>ADD VIDEO</h1>
